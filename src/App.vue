@@ -6,7 +6,15 @@
 </template>
 
 <script>
-export default {};
+import {mapActions} from 'vuex'
+export default {
+  methods:{
+    ...mapActions(['actLoadEmpresaSelect'])
+  },
+  created(){
+    this.actLoadEmpresaSelect()
+  }
+};
 </script>
 
 <style lang="scss">
