@@ -25,7 +25,6 @@ import store from './store'
 
 Vue.use(PaperDashboard);
 
-
 /* eslint-disable no-new */
 new Vue({
   router,

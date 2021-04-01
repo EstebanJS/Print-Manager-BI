@@ -6,14 +6,8 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+
 export default {
-  methods:{
-    ...mapActions(['actLoadEmpresaSelect'])
-  },
-  created(){
-    this.actLoadEmpresaSelect()
-  }
 };
 </script>
 

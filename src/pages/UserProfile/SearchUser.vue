@@ -3,10 +3,10 @@
     <div class="row">
       <div class="col-md-4">
         <fg-input
-          type="email"
-          label="Ingrese el correo del usuario"
-          placeholder="Correo del usuario"
-          v-model="Email"
+          type="text"
+          label="Ingrese el número de documento del usuario"
+          placeholder="Número de documento"
+          v-model="NumDoc"
         >
         </fg-input>
       </div>
@@ -20,15 +20,38 @@
 </template>
 
 <script>
+import { validarCaracteres, validarSoloNumeros } from "@/lib/validation.js";
+import { mapActions } from "vuex";
+
 export default {
   data: () => ({
-    Email: "",
+    NumDoc: "",
   }),
   methods: {
-    EventButton() {
-       this.$emit("callback", this.Email);
+    ...mapActions("users", ["actSearchUser"]),
+    async EventButton() {
+      if (validarCaracteres(this.NumDoc) && validarSoloNumeros(this.NumDoc)) {
+        const rest = await this.actSearchUser(this.NumDoc);
+        if (Array.isArray(rest)) {
+          if (rest.length > 0) {
+            console.log("array");
+            this.$emit("callback", rest[0]);
+          } 
+        }
+      } else {
+        this.$notify({
+          message: "Campos vacios o concaracteres invalidos ($%&|<>/-)",
+          icon: "ti-alert",
+          horizontalAlign: "right",
+          verticalAlign: "bottom",
+          type: "warning",
+        });
+      }
     },
   },
+  created(){
+    // console.log(procces.env.REST_API);
+  }
 };
 </script>
 

@@ -1,10 +1,15 @@
 <template>
   <card class="card">
     <div>
-      <SearchUserVue v-on:callback="callBackSearchUser"/>
+      <SearchUserVue v-on:callback="callBackSearchUser" />
     </div>
     <div>
-      <FormUserVue ActionForm="EDIT" :DataUserProps="UserInfo"/>
+      <FormUserVue
+        v-if="UserInfo != undefined"
+        ActionForm="EDIT"
+        :DataUserProps="UserInfo"
+        v-on:callback="callBackClean"
+      />
     </div>
   </card>
 </template>
@@ -16,15 +21,27 @@ export default {
     FormUserVue,
     SearchUserVue,
   },
-  data:()=>({
-    UserInfo:undefined
+  data: () => ({
+    UserInfo: undefined,
   }),
-  methods:{
-    callBackSearchUser(data){
-      // this.UserInfo = data
-      alert(data)
-    }
-  }
+  methods: {
+    callBackSearchUser(data) {
+      if (typeof data === "object") {
+        this.UserInfo = data;
+      } else {
+        this.$notify({
+          message: "Usuario no encontrado",
+          icon: "ti-na",
+          horizontalAlign: "right",
+          verticalAlign: "bottom",
+          type: "error",
+        });
+      }
+    },
+    callBackClean() {
+      this.UserInfo = undefined
+    },
+  },
 };
 </script>
 <style>
