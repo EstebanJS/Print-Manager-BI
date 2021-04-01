@@ -9,8 +9,7 @@ export default () => {
         baseURL: API_URL,
         withCredentials: false,
         headers: {
-            // "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Origin": "http://localhost:8080",
+            "Access-Control-Allow-Origin": "*",
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
