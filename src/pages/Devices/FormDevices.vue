@@ -204,7 +204,11 @@
 
     <div class="text-center">
       <p-button type="info" round @click.native.prevent="updateProfile">
-        {{ ActionForm === "ADD" ? "Agregar Usuario" : "Actualizar Usuario" }}
+        {{
+          ActionForm === "ADD"
+            ? "Agregar Dispositivo"
+            : "Actualizar Dispositivo"
+        }}
       </p-button>
     </div>
     <div class="clearfix"></div>
@@ -268,7 +272,7 @@ export default {
       "actLoadModeloDispositivoSelect",
       "actLoadEstadoDispositivoSelect",
     ]),
-    ...mapActions("dispositivos", ["actCreateNewDivice","actEditDevice"]),
+    ...mapActions("dispositivos", ["actCreateNewDivice", "actEditDevice"]),
     async updateProfile() {
       this.checklist.capacidad_Memoria = parseInt(
         this.checklist.capacidad_Memoria
@@ -319,6 +323,7 @@ export default {
             }
             break;
           default:
+            console.error("ERROR ACTION BUTTON IN FORM DEVICE");
             break;
         }
         this.device = {};

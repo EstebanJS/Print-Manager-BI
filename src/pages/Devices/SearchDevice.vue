@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { validarCaracteres, validarSoloNumeros } from "@/lib/validation.js";
+import { validarCaracteres } from "@/lib/validation.js";
 import { mapActions } from "vuex";
 
 export default {
@@ -31,8 +31,8 @@ export default {
     ...mapActions("dispositivos", ["actSearchDivice"]),
     async EventButton() {
       if (
-        this.serial !== "" ||
-        this.serial !== undefined ||
+        this.serial !== "" &&
+        this.serial !== undefined &&
         validarCaracteres(this.serial)
       ) {
         const { status, data } = await this.actSearchDivice(this.serial);

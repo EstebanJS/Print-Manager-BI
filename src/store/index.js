@@ -6,6 +6,7 @@ Vue.use(Vuex)
 //Modules
 import users from './users'
 import dispositivos from './dispositivos'
+import empresa from './empresa'
 //API
 import Api from '../Services/RestApi'
 
@@ -133,6 +134,7 @@ export default new Vuex.Store({
     },
     modules: {
         users, 
-        dispositivos
+        dispositivos,
+        empresa
     }
 })
