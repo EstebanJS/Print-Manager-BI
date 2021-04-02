@@ -21,6 +21,9 @@ import Typography from "@/pages/Typography.vue";
 import TableList from "@/pages/TableList.vue";
 import EditUser from "@/pages/UserProfile/EditUser.vue"
 import AddNewUser from "@/pages/UserProfile/AddNewUser.vue"
+import AddNewEmpresa from "@/pages/Empresas/AddNewEmpresa.vue"
+import EditEmpresa from "@/pages/Empresas/EditEmpresa.vue"
+
 
 const routes = [
   {
@@ -59,6 +62,16 @@ const routes = [
             component:AddNewUser
           }
         ]
+      },
+      {
+        path:"empresas/edit",
+        name:"Editar Empresa",
+        component:EditEmpresa
+      },
+      {
+        path:"empresas/add",
+        name:"Agregar Empresa",
+        component:AddNewEmpresa
       },
       {
         path: "notifications",

@@ -3,7 +3,12 @@
     <side-bar>
       <template slot="links">
         <sidebar-link to="/dashboard" name="Dashboard" icon="ti-panel" />
-        <drop-down class="nav-item resposive-menu" title="Dispositivos" title-classes="nav-link" icon="ti-printer">
+        <drop-down
+          class="nav-item resposive-menu"
+          title="Dispositivos"
+          title-classes="nav-link"
+          icon="ti-printer"
+        >
           <a href="#/devices/add" class="nav-link">
             <i class="ti-plus"></i>
             <p>Agregar</p>
@@ -14,7 +19,12 @@
           </a>
         </drop-down>
 
-        <drop-down class="nav-item resposive-menu" title="Servicios" title-classes="nav-link" icon="ti-ticket">
+        <drop-down
+          class="nav-item resposive-menu"
+          title="Servicios"
+          title-classes="nav-link"
+          icon="ti-ticket"
+        >
           <a href="#" class="nav-link">
             <i class="ti-plus"></i>
             <p>Agregar</p>
@@ -33,7 +43,12 @@
           </a>
         </drop-down>
 
-        <drop-down class="nav-item resposive-menu" title="Usuarios" title-classes="nav-link" icon="ti-user">
+        <drop-down
+          class="nav-item resposive-menu"
+          title="Usuarios"
+          title-classes="nav-link"
+          icon="ti-user"
+        >
           <a href="#/users/add" class="nav-link">
             <i class="ti-plus"></i>
             <p>Agregar</p>
@@ -52,6 +67,29 @@
           </a> -->
         </drop-down>
 
+        <drop-down
+          class="nav-item resposive-menu"
+          title="Empresas"
+          title-classes="nav-link"
+          icon="ti-briefcase"
+        >
+          <a href="#/empresas/add" class="nav-link">
+            <i class="ti-plus"></i>
+            <p>Agregar</p>
+          </a>
+          <a href="#/empresas/edit" class="nav-link">
+            <i class="ti-pencil"></i>
+            <p>Editar</p>
+          </a>
+          <!-- <a href="#" class="nav-link">
+            <i class="ti-na"></i>
+            <p>Deshabilitar</p>
+          </a>
+          <a href="#" class="nav-link">
+            <i class="ti-check"></i>
+            <p>Habilitar</p>
+          </a> -->
+        </drop-down>
       </template>
       <mobile-menu>
         <li class="nav-item">
@@ -109,6 +147,29 @@
             <p>Agregar</p>
           </a>
           <a href="#/users/edit" class="nav-link">
+            <i class="ti-pencil"></i>
+            <p>Editar</p>
+          </a>
+          <!-- <a href="#" class="nav-link">
+            <i class="ti-na"></i>
+            <p>Deshabilitar</p>
+          </a>
+          <a href="#" class="nav-link">
+            <i class="ti-check"></i>
+            <p>Habilitar</p>
+          </a> -->
+        </drop-down>
+        <drop-down
+          class="nav-item"
+          title="Empresas"
+          title-classes="nav-link"
+          icon="ti-briefcase"
+        >
+          <a href="#/empresas/add" class="nav-link">
+            <i class="ti-plus"></i>
+            <p>Agregar</p>
+          </a>
+          <a href="#/empresas/edit" class="nav-link">
             <i class="ti-pencil"></i>
             <p>Editar</p>
           </a>

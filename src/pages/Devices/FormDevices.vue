@@ -269,7 +269,7 @@ export default {
       "actLoadEstadoDispositivoSelect",
     ]),
     ...mapActions("dispositivos", ["actCreateNewDivice","actEditDevice"]),
-    updateProfile() {
+    async updateProfile() {
       this.checklist.capacidad_Memoria = parseInt(
         this.checklist.capacidad_Memoria
       );
@@ -295,7 +295,7 @@ export default {
         switch (this.ActionForm) {
           case "ADD":
             if (
-              this.actCreateNewDivice({
+              await this.actCreateNewDivice({
                 device: this.device,
                 checklist: this.checklist,
               })
@@ -307,7 +307,7 @@ export default {
             break;
           case "EDIT":
             if (
-              this.actEditDevice({
+              await this.actEditDevice({
                 device: this.device,
                 checklist: this.checklist,
               })
@@ -350,7 +350,7 @@ export default {
       });
     },
   },
-  created() {
+  async created() {
     if (this.DataDeviceProps) {
       this.device = { ...this.DataDeviceProps.device };
       this.checklist = { ...this.DataDeviceProps.checklist };
@@ -359,16 +359,16 @@ export default {
       this.checklist = { ...this.ClearChecklist };
     }
     if (this.getModeloDispositivoSelect.length === 0) {
-      this.actLoadModeloDispositivoSelect();
+      await this.actLoadModeloDispositivoSelect();
     }
     if (this.getCiudadSelect.length === 0) {
-      this.actLoadCiudadSelect();
+      await this.actLoadCiudadSelect();
     }
     if (this.getEstadoDispositivoSelect.length === 0) {
-      this.actLoadEstadoDispositivoSelect();
+      await this.actLoadEstadoDispositivoSelect();
     }
     if (this.getEmpresaSelect.length === 0) {
-      this.actLoadEmpresaSelect();
+      await this.actLoadEmpresaSelect();
     }
   },
 };

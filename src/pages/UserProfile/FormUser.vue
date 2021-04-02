@@ -229,8 +229,12 @@ export default {
       "actLoadTipDocSelect",
       "actLoadRollSelect",
     ]),
-    ...mapActions("users", ["actCreateNewUser", "actUpdateUser"]),
-    EventButton() {
+    ...mapActions("users", [
+      "actCreateNewUser",
+      "actUpdateUser",
+      "actValidacionCorreoDocumento",
+    ]),
+    async EventButton() {
       if (
         !evalObjetForm(this.user) ||
         this.user.contrasena != this.reptContrasena
@@ -245,19 +249,31 @@ export default {
       } else {
         switch (this.ActionForm) {
           case "ADD":
-            this.user.contrasena = sha256(this.user.contrasena);
-            if (!this.actCreateNewUser(this.user)) {
-              this.successMessage();
-            }else{
-              this.errorMessage
+            if (await this.actValidacionCorreoDocumento(this.user)) {
+              this.user.contrasena = sha256(this.user.contrasena);
+              console.log("paso");
+              if (!(await this.actCreateNewUser(this.user))) {
+                this.successMessage();
+              } else {
+                this.errorMessage;
+              }
+            } else {
+              this.$notify({
+                message: `Usuario ya se encuentra registrado`,
+                icon: "ti-alert",
+                horizontalAlign: "right",
+                verticalAlign: "bottom",
+                type: "warning",
+              });
             }
+
             break;
           case "EDIT":
-            if (this.actUpdateUser(this.user)) {
+            if (await this.actUpdateUser(this.user)) {
               this.successMessage();
               this.$emit("callback");
-            }else{
-              this.errorMessage()
+            } else {
+              this.errorMessage();
             }
             break;
           default:
@@ -291,7 +307,7 @@ export default {
       });
     },
   },
-  created() {
+  async created() {
     if (this.DataUserProps) {
       this.user = { ...this.DataUserProps };
       this.reptContrasena = this.user.contrasena;
@@ -299,19 +315,19 @@ export default {
       this.user = { ...this.ClearUser };
     }
     if (this.getEmpresaSelect.length === 0) {
-      this.actLoadEmpresaSelect();
+      await this.actLoadEmpresaSelect();
     }
     if (this.getGeneroSelect.length === 0) {
-      this.actLoadGeneroSelect();
+      await this.actLoadGeneroSelect();
     }
     if (this.getCiudadSelect.length === 0) {
-      this.actLoadCiudadSelect();
+      await this.actLoadCiudadSelect();
     }
     if (this.getTipDocSelect.length === 0) {
-      this.actLoadTipDocSelect();
+      await this.actLoadTipDocSelect();
     }
     if (this.getRollSelect.length === 0) {
-      this.actLoadRollSelect();
+      await this.actLoadRollSelect();
     }
   },
 };

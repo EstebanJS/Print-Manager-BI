@@ -11,10 +11,24 @@ export default {
     },
     actions: {
         async actCreateNewUser(context, data) {
-            console.log(data);
+
             const { status } = await Api().post("/usuario", data)
             if (status === 200) {
                 return true
+            }
+            return false
+        },
+        async actValidacionCorreoDocumento(context, data) {
+            const { numero_Doc, correo } = data
+            const { status: stsDocumento, data: dtaDocumento } = await Api().get(`/validar_correo/${numero_Doc}`)
+            if (stsDocumento === 200 && Array.isArray(dtaDocumento) && dtaDocumento < 0) {
+                console.log('Rest Documento',stsDocumento);
+                const { status: stsCorreo, data: dtaCorreo } = await Api().get(`/validar_correo/${correo}`)
+                if (stsCorreo === 200 && Array.isArray(dtaDocumento) && dtaCorreo < 0) {
+                    console.log('Rest Correo',stsCorreo);
+                    return true
+                }
+
             }
             return false
         },
