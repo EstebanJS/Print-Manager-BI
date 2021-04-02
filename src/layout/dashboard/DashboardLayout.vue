@@ -4,21 +4,13 @@
       <template slot="links">
         <sidebar-link to="/dashboard" name="Dashboard" icon="ti-panel" />
         <drop-down class="nav-item resposive-menu" title="Dispositivos" title-classes="nav-link" icon="ti-printer">
-          <a href="#/adddevices" class="nav-link">
+          <a href="#/devices/add" class="nav-link">
             <i class="ti-plus"></i>
             <p>Agregar</p>
           </a>
-          <a href="#" class="nav-link">
+          <a href="#/devices/edit" class="nav-link">
             <i class="ti-pencil"></i>
             <p>Editar</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-na"></i>
-            <p>Deshabilitar</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-check"></i>
-            <p>Habilitar</p>
           </a>
         </drop-down>
 
@@ -74,21 +66,13 @@
           title-classes="nav-link"
           icon="ti-printer"
         >
-          <a href="#" class="nav-link">
+          <a href="#/devices/add" class="nav-link">
             <i class="ti-plus"></i>
             <p>Agregar</p>
           </a>
-          <a href="#" class="nav-link">
+          <a href="#/devices/edit" class="nav-link">
             <i class="ti-pencil"></i>
             <p>Editar</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-na"></i>
-            <p>Deshabilitar</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-check"></i>
-            <p>Habilitar</p>
           </a>
         </drop-down>
         <drop-down

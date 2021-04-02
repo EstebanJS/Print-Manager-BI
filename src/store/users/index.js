@@ -11,6 +11,7 @@ export default {
     },
     actions: {
         async actCreateNewUser(context, data) {
+            console.log(data);
             const { status } = await Api().post("/usuario", data)
             if (status === 200) {
                 return true

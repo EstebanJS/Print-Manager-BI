@@ -28,7 +28,7 @@ export function evalObjetForm(objForm) {
 
 //funcion para validar caracteres especiales
 export function validarCaracteres(dato) {
-  const car = /[$%&|<>/]/;
+  const car = /[$%&|<>]/;
   return !car.test(dato);
 }
 

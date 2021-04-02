@@ -48,9 +48,6 @@ export default {
         });
       }
     },
-  },
-  created(){
-    // console.log(procces.env.REST_API);
   }
 };
 </script>

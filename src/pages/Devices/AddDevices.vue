@@ -1,15 +1,16 @@
 <template>
   <card class="card" title="Agregar Dispositivo">
     <div>
-      <FormUserVue ActionForm="ADD" />
+      <FormDevicesVue ActionForm="ADD" />
     </div>
   </card>
 </template>
 <script>
-import FormUserVue from "../UserProfile/FormUser.vue";
+import FormDevicesVue from './FormDevices.vue';
+FormDevicesVue
 export default {
   components: {
-    FormUserVue,
+    FormDevicesVue,
   },
 };
 </script>

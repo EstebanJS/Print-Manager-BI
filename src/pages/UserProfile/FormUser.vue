@@ -248,37 +248,43 @@ export default {
             this.user.contrasena = sha256(this.user.contrasena);
             if (!this.actCreateNewUser(this.user)) {
               this.successMessage();
+            }else{
+              this.errorMessage
             }
             break;
           case "EDIT":
             if (this.actUpdateUser(this.user)) {
               this.successMessage();
               this.$emit("callback");
+            }else{
+              this.errorMessage()
             }
             break;
           default:
             console.error("ERROR ACTION BUTTON IN FORM USER");
-            this.$notify({
-              message: `Proceso de ${
-                this.ActionForm === "ADD" ? "Creacion " : "Actualizacion"
-              } de usuario fallo`,
-              icon: "ti-na",
-              horizontalAlign: "right",
-              verticalAlign: "bottom",
-              type: "error",
-            });
             break;
         }
         this.user = this.ClearUser;
-        this.reptContrasena = ""
+        this.reptContrasena = "";
       }
     },
     successMessage() {
       this.$notify({
         message: `Proceso de ${
           this.ActionForm === "ADD" ? "Creacion " : "Actualizacion"
-        } de usuario fallo`,
+        } de usuario exitoso`,
         icon: "ti-check",
+        horizontalAlign: "right",
+        verticalAlign: "bottom",
+        type: "success",
+      });
+    },
+    errorMessage() {
+      this.$notify({
+        message: `Proceso de ${
+          this.ActionForm === "ADD" ? "Creacion " : "Actualizacion"
+        } de usuario fallo`,
+        icon: "ti-na",
         horizontalAlign: "right",
         verticalAlign: "bottom",
         type: "error",

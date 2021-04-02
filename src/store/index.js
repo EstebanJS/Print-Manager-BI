@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 //Modules
 import users from './users'
+import dispositivos from './dispositivos'
 //API
 import Api from '../Services/RestApi'
 
@@ -15,6 +16,8 @@ export default new Vuex.Store({
         CiudadSelect: [],
         TipDocSelect: [],
         RollSelect: [],
+        ModeloDispositivoSelect: [],
+        EstadoDispositivoSelect: []
     },
     mutations: {
         mtaSetEmpresaSelect(state, value) {
@@ -28,11 +31,17 @@ export default new Vuex.Store({
         },
         mtaSetTipDocSelect(state, value) {
             state.TipDocSelect = value
-        }
-        ,
+        },
         mtaSetRollSelect(state, value) {
             state.RollSelect = value
+        },
+        mtaSetModeloDispositivoSelect(state, value) {
+            state.ModeloDispositivoSelect = value
+        },
+        mtaSetEstadoDispositivoSelect(state, value) {
+            state.EstadoDispositivoSelect = value
         }
+
     },
     actions: {
         async actLoadEmpresaSelect(context) {
@@ -79,26 +88,51 @@ export default new Vuex.Store({
             } else {
                 return false
             }
+        },
+        async actLoadModeloDispositivoSelect(context) {
+            const { status, data } = await Api().get("/modelo_dispositivo")
+            if (status === 200) {
+                context.commit('mtaSetModeloDispositivoSelect', data)
+                return true
+            } else {
+                return false
+            }
+        },
+        async actLoadEstadoDispositivoSelect(context) {
+            const { status, data } = await Api().get("/estado_dispositivo")
+            if (status === 200) {
+                context.commit('mtaSetEstadoDispositivoSelect', data)
+                return true
+            } else {
+                return false
+            }
         }
     },
     getters: {
-        getEmpresaSelect: state =>{
+        getEmpresaSelect: state => {
             return state.EmpresaSelect
         },
-        getGeneroSelect: state =>{
+        getGeneroSelect: state => {
             return state.GeneroSelect
         },
-        getCiudadSelect: state =>{
+        getCiudadSelect: state => {
             return state.CiudadSelect
         },
-        getTipDocSelect: state =>{
+        getTipDocSelect: state => {
             return state.TipDocSelect
         },
-        getRollSelect: state =>{
+        getRollSelect: state => {
             return state.RollSelect
         },
+        getModeloDispositivoSelect: state => {
+            return state.ModeloDispositivoSelect
+        },
+        getEstadoDispositivoSelect: state => {
+            return state.EstadoDispositivoSelect
+        }
     },
     modules: {
-        users
+        users, 
+        dispositivos
     }
 })

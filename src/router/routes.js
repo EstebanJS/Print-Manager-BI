@@ -12,6 +12,7 @@ import NotFound from "@/pages/NotFoundPage.vue";
 // Admin pages
 import Dashboard from "@/pages/Dashboard.vue";
 import AddDevices from "@/pages/Devices/AddDevices"
+import EditDevices from "@/pages/Devices/EditDevices"
 import UserProfile from "@/pages/UserProfile.vue";
 import Notifications from "@/pages/Notifications.vue";
 import Icons from "@/pages/Icons.vue";
@@ -33,9 +34,14 @@ const routes = [
         component: Dashboard
       },
       {
-        path: "adddevices",
+        path: "devices/add",
         name: "Agregar Dispositivos",
         component: AddDevices
+      },
+      {
+        path: "devices/edit",
+        name: "Editar Dispositivos",
+        component: EditDevices
       },
       {
         path: "users",
