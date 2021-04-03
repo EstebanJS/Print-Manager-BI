@@ -21,11 +21,11 @@ export default {
         async actValidacionCorreoDocumento(context, data) {
             const { numero_Doc, correo } = data
             const { status: stsDocumento, data: dtaDocumento } = await Api().get(`/validar_correo/${numero_Doc}`)
-            if (stsDocumento === 200 && Array.isArray(dtaDocumento) && dtaDocumento < 0) {
-                console.log('Rest Documento',stsDocumento);
+            if (stsDocumento === 200 && Array.isArray(dtaDocumento) && dtaDocumento.length === 0) {
+                // console.log('Rest Documento', stsDocumento);
                 const { status: stsCorreo, data: dtaCorreo } = await Api().get(`/validar_correo/${correo}`)
-                if (stsCorreo === 200 && Array.isArray(dtaDocumento) && dtaCorreo < 0) {
-                    console.log('Rest Correo',stsCorreo);
+                if (stsCorreo === 200 && Array.isArray(dtaDocumento) && dtaCorreo.length === 0) {
+                    // console.log('Rest Correo', stsCorreo);
                     return true
                 }
 

@@ -10,7 +10,7 @@ export default {
     actions: {
         async actCreateNewEmpresa(context, data) {
             const { status: stsValidar, data: dtaValidar } = await Api().get(`/validar_empresa/${data.nit_Empresa}`)
-            if (stsValidar === 200 && Array.isArray(dtaValidar) && dtaValidar.length < 0) {
+            if (stsValidar === 200 && Array.isArray(dtaValidar) && dtaValidar.length === 0) {
                 const { status } = await Api().post('/empresa', data)
                 if (status === 200) {
                     return true

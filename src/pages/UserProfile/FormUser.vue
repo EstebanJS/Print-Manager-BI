@@ -251,8 +251,7 @@ export default {
           case "ADD":
             if (await this.actValidacionCorreoDocumento(this.user)) {
               this.user.contrasena = sha256(this.user.contrasena);
-              console.log("paso");
-              if (!(await this.actCreateNewUser(this.user))) {
+              if (await this.actCreateNewUser(this.user)) {
                 this.successMessage();
               } else {
                 this.errorMessage;
@@ -303,7 +302,7 @@ export default {
         icon: "ti-na",
         horizontalAlign: "right",
         verticalAlign: "bottom",
-        type: "error",
+        type: "danger",
       });
     },
   },

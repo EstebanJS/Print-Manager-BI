@@ -236,13 +236,13 @@ export default {
     ClearDevice: {
       id_Modelo_Dispositivo: "",
       serial: "",
-      multifuncional: 0,
+      multifuncional: "",
       direccion_IP: "",
       id_Ciudad: "",
       direccion: "",
       id_Empresa: "",
       id_Estado_Dispositivo: "",
-      contador: 0,
+      contador: "",
       fecha_Asignacion: "",
       fecha_Ultimo_Servicio: "",
     },
@@ -250,10 +250,10 @@ export default {
     ClearChecklist: {
       toner: "",
       memoria_SD: "",
-      capacidad_Memoria: 0,
-      vida_Util_Unidad_Revelado: 0,
-      vida_Util_Unidad_Cilindro: 0,
-      vida_Util_Unidad_Fusora: 0,
+      capacidad_Memoria: "",
+      vida_Util_Unidad_Revelado: "",
+      vida_Util_Unidad_Cilindro: "",
+      vida_Util_Unidad_Fusora: "",
       fecha_CheCkList: "2021-04-01T14:05:57.78",
     },
   }),
@@ -272,7 +272,7 @@ export default {
       "actLoadModeloDispositivoSelect",
       "actLoadEstadoDispositivoSelect",
     ]),
-    ...mapActions("dispositivos", ["actCreateNewDivice", "actEditDevice"]),
+    ...mapActions("dispositivos", ["actCreateNewDevice", "actEditDevice"]),
     async updateProfile() {
       this.checklist.capacidad_Memoria = parseInt(
         this.checklist.capacidad_Memoria
@@ -299,12 +299,12 @@ export default {
         switch (this.ActionForm) {
           case "ADD":
             if (
-              await this.actCreateNewDivice({
+              await this.actCreateNewDevice({
                 device: this.device,
                 checklist: this.checklist,
               })
             ) {
-              this.successMessage;
+              this.successMessage();
             } else {
               this.errorMessage();
             }
@@ -351,7 +351,7 @@ export default {
         icon: "ti-na",
         horizontalAlign: "right",
         verticalAlign: "bottom",
-        type: "error",
+        type: "danger",
       });
     },
   },
