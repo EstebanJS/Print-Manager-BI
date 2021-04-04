@@ -31,7 +31,7 @@ export default {
         this.EmpresaInfo = data;
       } else {
         this.$notify({
-          message: "Usuario no encontrado",
+          message: "Empresa no encontrado",
           icon: "ti-na",
           horizontalAlign: "right",
           verticalAlign: "bottom",

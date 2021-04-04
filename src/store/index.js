@@ -7,6 +7,7 @@ Vue.use(Vuex)
 import users from './users'
 import dispositivos from './dispositivos'
 import empresa from './empresa'
+import modeloDispositivo from './modeloDispositivo'
 //API
 import Api from '../Services/RestApi'
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
         TipDocSelect: [],
         RollSelect: [],
         ModeloDispositivoSelect: [],
-        EstadoDispositivoSelect: []
+        EstadoDispositivoSelect: [],
+        TonerSelected: []
     },
     mutations: {
         mtaSetEmpresaSelect(state, value) {
@@ -41,6 +43,9 @@ export default new Vuex.Store({
         },
         mtaSetEstadoDispositivoSelect(state, value) {
             state.EstadoDispositivoSelect = value
+        },
+        mtaSetTonerSelected(state, value) {
+            state.TonerSelected = value
         }
 
     },
@@ -107,6 +112,15 @@ export default new Vuex.Store({
             } else {
                 return false
             }
+        },
+        async actLoadTonerSelected(context) {
+            const { status, data } = await Api().get("/toner")
+            if (status === 200) {
+                context.commit('mtaSetTonerSelected', data)
+                return true
+            } else {
+                return false
+            }
         }
     },
     getters: {
@@ -130,11 +144,15 @@ export default new Vuex.Store({
         },
         getEstadoDispositivoSelect: state => {
             return state.EstadoDispositivoSelect
+        },
+        getTonerSelected: state => {
+            return state.TonerSelected
         }
     },
     modules: {
-        users, 
+        users,
         dispositivos,
-        empresa
+        empresa,
+        modeloDispositivo
     }
 })

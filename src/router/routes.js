@@ -23,7 +23,8 @@ import EditUser from "@/pages/UserProfile/EditUser.vue"
 import AddNewUser from "@/pages/UserProfile/AddNewUser.vue"
 import AddNewEmpresa from "@/pages/Empresas/AddNewEmpresa.vue"
 import EditEmpresa from "@/pages/Empresas/EditEmpresa.vue"
-
+import AddModelDevices from "@/pages/ModelDevices/AddModelDevices.vue"
+import EditModelDevices from "@/pages/ModelDevices/EditModelDevices.vue"
 
 const routes = [
   {
@@ -47,6 +48,16 @@ const routes = [
         component: EditDevices
       },
       {
+        path: "model_devices/add",
+        name: "Agregar Modelo Dispositivos",
+        component: AddModelDevices
+      },
+      {
+        path: "model_devices/edit",
+        name: "Editar Modelo Dispositivos",
+        component: EditModelDevices
+      },
+      {
         path: "users",
         name: "users",
         component: UserProfile,
@@ -57,21 +68,21 @@ const routes = [
             component: EditUser
 
           }, {
-            path:"add",
-            name:"Agregar Usuario",
-            component:AddNewUser
+            path: "add",
+            name: "Agregar Usuario",
+            component: AddNewUser
           }
         ]
       },
       {
-        path:"empresas/edit",
-        name:"Editar Empresa",
-        component:EditEmpresa
+        path: "empresas/edit",
+        name: "Editar Empresa",
+        component: EditEmpresa
       },
       {
-        path:"empresas/add",
-        name:"Agregar Empresa",
-        component:AddNewEmpresa
+        path: "empresas/add",
+        name: "Agregar Empresa",
+        component: AddNewEmpresa
       },
       {
         path: "notifications",

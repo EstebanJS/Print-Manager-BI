@@ -21,6 +21,22 @@
 
         <drop-down
           class="nav-item resposive-menu"
+          title="Modelo Dispositivos"
+          title-classes="nav-link"
+          icon="ti-harddrives"
+        >
+          <a href="#/model_devices/add" class="nav-link">
+            <i class="ti-plus"></i>
+            <p>Agregar</p>
+          </a>
+          <a href="#/model_devices/edit" class="nav-link">
+            <i class="ti-pencil"></i>
+            <p>Editar</p>
+          </a>
+        </drop-down>
+
+        <drop-down
+          class="nav-item resposive-menu"
           title="Servicios"
           title-classes="nav-link"
           icon="ti-ticket"
@@ -81,14 +97,6 @@
             <i class="ti-pencil"></i>
             <p>Editar</p>
           </a>
-          <!-- <a href="#" class="nav-link">
-            <i class="ti-na"></i>
-            <p>Deshabilitar</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-check"></i>
-            <p>Habilitar</p>
-          </a> -->
         </drop-down>
       </template>
       <mobile-menu>
@@ -109,6 +117,21 @@
             <p>Agregar</p>
           </a>
           <a href="#/devices/edit" class="nav-link">
+            <i class="ti-pencil"></i>
+            <p>Editar</p>
+          </a>
+        </drop-down>
+        <drop-down
+          class="nav-item"
+          title="Modelo Dispositivos"
+          title-classes="nav-link"
+          icon="ti-harddrives"
+        >
+          <a href="#/model_devices/add" class="nav-link">
+            <i class="ti-plus"></i>
+            <p>Agregar</p>
+          </a>
+          <a href="#/model_devices/edit" class="nav-link">
             <i class="ti-pencil"></i>
             <p>Editar</p>
           </a>
