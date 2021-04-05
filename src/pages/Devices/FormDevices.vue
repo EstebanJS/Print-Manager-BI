@@ -1,5 +1,10 @@
 <template>
   <form @submit.prevent>
+    <div class="d-flex flex-row-reverse">
+      <div v-if="ActionForm === 'EDIT'" class="p-2">
+        <strong>Ultima fecha de servicio: {{ formatDate(fecha_ultimo_servicio) }}</strong>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-5">
         <label for="exampleFormControlSelect1">Modelo</label>
@@ -70,7 +75,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <fg-input
           type="text"
           label="Dirección"
@@ -79,7 +84,7 @@
         >
         </fg-input>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <fg-input
           type="number"
           label="Contador de paginas"
@@ -88,19 +93,10 @@
         >
         </fg-input>
       </div>
-      <div class="col-md-4">
-        <fg-input
-          type="date"
-          label="Fecha de asignación"
-          placeholder="Fecha de asignación"
-          v-model="device.fecha_Asignacion"
-        >
-        </fg-input>
-      </div>
     </div>
 
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="Empresa">Empresa</label>
         <select class="form-control" id="Empresa" v-model="device.id_Empresa">
           <option
@@ -112,7 +108,7 @@
           </option>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="exampleFormControlSelect1">Estado</label>
         <select
           class="form-control"
@@ -127,15 +123,6 @@
             {{ estado.nombre_Estado_Dispositivo }}
           </option>
         </select>
-      </div>
-      <div class="col-md-4">
-        <fg-input
-          type="date"
-          label="Fecha Ultimo Servicio"
-          placeholder="Fecha Ultimo Servicio"
-          v-model="device.fecha_Ultimo_Servicio"
-        >
-        </fg-input>
       </div>
     </div>
 
@@ -243,8 +230,7 @@ export default {
       id_Empresa: "",
       id_Estado_Dispositivo: "",
       contador: "",
-      fecha_Asignacion: "",
-      fecha_Ultimo_Servicio: "",
+      fecha_Asignacion: "2021-04-01T14:05:57.78",
     },
     checklist: {},
     ClearChecklist: {
@@ -256,6 +242,7 @@ export default {
       vida_Util_Unidad_Fusora: "",
       fecha_CheCkList: "2021-04-01T14:05:57.78",
     },
+    fecha_ultimo_servicio: "",
   }),
   computed: {
     ...mapGetters([
@@ -266,9 +253,12 @@ export default {
     ]),
   },
   watch: {
-    DataDeviceProps(newValue) {
+    async DataDeviceProps(newValue) {
       this.device = { ...newValue.device };
       this.checklist = { ...newValue.checklist };
+      this.fecha_ultimo_servicio = await this.actGetUltimaFechaServicio(
+        this.device.id_Dispositivo
+      );
     },
   },
   methods: {
@@ -277,8 +267,13 @@ export default {
       "actLoadCiudadSelect",
       "actLoadModeloDispositivoSelect",
       "actLoadEstadoDispositivoSelect",
+      "actGetUltimaFechaServicio",
     ]),
-    ...mapActions("dispositivos", ["actCreateNewDevice", "actEditDevice"]),
+    ...mapActions("dispositivos", [
+      "actCreateNewDevice",
+      "actEditDevice",
+      "actValidateSerial",
+    ]),
     async updateProfile() {
       this.checklist.capacidad_Memoria = parseInt(
         this.checklist.capacidad_Memoria
@@ -302,36 +297,47 @@ export default {
           type: "warning",
         });
       } else {
-        switch (this.ActionForm) {
-          case "ADD":
-            if (
-              await this.actCreateNewDevice({
-                device: this.device,
-                checklist: this.checklist,
-              })
-            ) {
-              this.successMessage();
-            } else {
-              this.errorMessage();
-            }
-            break;
-          case "EDIT":
-            if (
-              await this.actEditDevice({
-                device: this.device,
-                checklist: this.checklist,
-              })
-            ) {
-              this.successMessage();
-              this.$emit("callback");
-            } else {
-              this.errorMessage();
-            }
-            break;
-          default:
-            console.error("ERROR ACTION BUTTON IN FORM DEVICE");
-            break;
+        if (await this.actValidateSerial(this.device.serial)) {
+          switch (this.ActionForm) {
+            case "ADD":
+              if (
+                await this.actCreateNewDevice({
+                  device: this.device,
+                  checklist: this.checklist,
+                })
+              ) {
+                this.successMessage();
+              } else {
+                this.errorMessage();
+              }
+              break;
+            case "EDIT":
+              if (
+                await this.actEditDevice({
+                  device: this.device,
+                  checklist: this.checklist,
+                })
+              ) {
+                this.successMessage();
+                this.$emit("callback");
+              } else {
+                this.errorMessage();
+              }
+              break;
+            default:
+              console.error("ERROR ACTION BUTTON IN FORM DEVICE");
+              break;
+          }
+        } else {
+          this.$notify({
+            message: "Dispositivo con ese serial ya fue registrado",
+            icon: "ti-alert",
+            horizontalAlign: "right",
+            verticalAlign: "bottom",
+            type: "warning",
+          });
         }
+
         this.device = {};
         this.checklist = {};
         this.device = { ...this.ClearDevice };
@@ -360,11 +366,26 @@ export default {
         type: "danger",
       });
     },
+    formatDate(date) {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [year, month, day].join("-");
+    },
   },
   async created() {
     if (this.DataDeviceProps) {
       this.device = { ...this.DataDeviceProps.device };
       this.checklist = { ...this.DataDeviceProps.checklist };
+      this.fecha_ultimo_servicio = await this.actGetUltimaFechaServicio(
+        this.device.id_Dispositivo
+      );
+      console.log(this.fecha_ultimo_servicio);
     } else {
       this.device = { ...this.ClearDevice };
       this.checklist = { ...this.ClearChecklist };

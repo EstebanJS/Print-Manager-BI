@@ -144,6 +144,7 @@ export default {
     ...mapActions("modeloDispositivo", [
       "actCreateNewModeloDispositivo",
       "actUpdateModeloDispositivo",
+      "actValidarModelo",
     ]),
     async EventButton() {
       if (!evalObjetForm(this.model)) {
@@ -155,27 +156,38 @@ export default {
           type: "warning",
         });
       } else {
-        this.model.paginasXMinuto = parseInt(this.model.paginasXMinuto);
-        switch (this.ActionForm) {
-          case "ADD":
-            if (await this.actCreateNewModeloDispositivo(this.model)) {
-              this.successMessage();
-            } else {
-              this.errorMessage();
-            }
-            break;
-          case "EDIT":
-            if (await this.actUpdateModeloDispositivo(this.model)) {
-              this.successMessage();
-              this.$emit("callback");
-            } else {
-              this.errorMessage();
-            }
-            break;
-          default:
-            console.error("ERROR ACTION BUTTON IN FORM DEVICE");
-            break;
+        if (this.actValidarModelo(this.model.nombre_Modelo)) {
+          this.model.paginasXMinuto = parseInt(this.model.paginasXMinuto);
+          switch (this.ActionForm) {
+            case "ADD":
+              if (await this.actCreateNewModeloDispositivo(this.model)) {
+                this.successMessage();
+              } else {
+                this.errorMessage();
+              }
+              break;
+            case "EDIT":
+              if (await this.actUpdateModeloDispositivo(this.model)) {
+                this.successMessage();
+                this.$emit("callback");
+              } else {
+                this.errorMessage();
+              }
+              break;
+            default:
+              console.error("ERROR ACTION BUTTON IN FORM DEVICE");
+              break;
+          }
+        } else {
+          this.$notify({
+            message: "Dispositivo ya se encuentra registrado",
+            icon: "ti-alert",
+            horizontalAlign: "right",
+            verticalAlign: "bottom",
+            type: "warning",
+          });
         }
+
         this.model = {};
       }
     },

@@ -1,5 +1,5 @@
 <template>
-  <card class="card">
+  <card class="card" title="Editar Empresa">
     <div>
       <SearchEmpresaVue v-on:callback="callBackSearchEmpresa" />
     </div>

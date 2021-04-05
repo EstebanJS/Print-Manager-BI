@@ -41,7 +41,7 @@
           title-classes="nav-link"
           icon="ti-ticket"
         >
-          <a href="#" class="nav-link">
+          <a href="#/servicios/add" class="nav-link">
             <i class="ti-plus"></i>
             <p>Agregar</p>
           </a>
@@ -142,7 +142,7 @@
           title-classes="nav-link"
           icon="ti-ticket"
         >
-          <a href="#" class="nav-link">
+          <a href="#/servicios/add" class="nav-link">
             <i class="ti-plus"></i>
             <p>Agregar</p>
           </a>

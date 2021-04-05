@@ -2,11 +2,11 @@ import Api from '../../Services/RestApi'
 export default {
     namespaced: true,
     state: () => ({
-        users: []
+        usersForRoll: []
     }),
     mutations: {
-        mtdAddNewUser(state, data) {
-            state.users.unshift(data)
+        mtdUsersForRoll(state, data) {
+            state.usersForRoll = data
         }
     },
     actions: {
@@ -45,10 +45,20 @@ export default {
                 return true
             }
             return false
+        },
+        async actUsersForRoll(context, id_rol) {
+            const { status, data } = await Api().get(`/usuario_x_rol/${id_rol}`)
+            if (status === 200) {
+                context.commit('mtdUsersForRoll', data)
+                return true
+            }
+            return false
         }
 
     },
     getters: {
-
+        getUsersForRoll: state => {
+            return state.usersForRoll
+        }
     }
 }

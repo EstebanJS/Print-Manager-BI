@@ -8,6 +8,7 @@ import users from './users'
 import dispositivos from './dispositivos'
 import empresa from './empresa'
 import modeloDispositivo from './modeloDispositivo'
+import servicios from './servicios'
 //API
 import Api from '../Services/RestApi'
 
@@ -20,7 +21,10 @@ export default new Vuex.Store({
         RollSelect: [],
         ModeloDispositivoSelect: [],
         EstadoDispositivoSelect: [],
-        TonerSelected: []
+        EstadoServicioSelect: [],
+        TonerSelected: [],
+        TipoFallaSelect: [],
+        TipoServicioSelect: [],
     },
     mutations: {
         mtaSetEmpresaSelect(state, value) {
@@ -44,8 +48,17 @@ export default new Vuex.Store({
         mtaSetEstadoDispositivoSelect(state, value) {
             state.EstadoDispositivoSelect = value
         },
+        mtaSetEstadoServicioSelect(state, value) {
+            state.EstadoServicioSelect = value
+        },
         mtaSetTonerSelected(state, value) {
             state.TonerSelected = value
+        },
+        mtaSetTipoFallaSelect(state, value) {
+            state.TipoFallaSelect = value
+        },
+        mtaSetTipoServicioSelect(state, value) {
+            state.TipoServicioSelect = value
         }
 
     },
@@ -113,6 +126,15 @@ export default new Vuex.Store({
                 return false
             }
         },
+        async actLoadEstadoServicioSelect(context) {
+            const { status, data } = await Api().get("/estado_servicio")
+            if (status === 200) {
+                context.commit('mtaSetEstadoServicioSelect', data)
+                return true
+            } else {
+                return false
+            }
+        },
         async actLoadTonerSelected(context) {
             const { status, data } = await Api().get("/toner")
             if (status === 200) {
@@ -121,6 +143,29 @@ export default new Vuex.Store({
             } else {
                 return false
             }
+        },
+        async actGetUltimaFechaServicio(context, id) {
+            const { status, data } = await Api().get(`/ultimo_servicio/${id}`)
+            if (status === 200) {
+                return data[0].fecha_Solicitud
+            }
+            return undefined
+        },
+        async actLoadTipoFallaSelect(context) {
+            const { status, data } = await Api().get("/tipo_falla")
+            if (status === 200) {
+                context.commit('mtaSetTipoFallaSelect', data)
+                return true
+            }
+            return false
+        },
+        async actLoadTipoServicioSelect(context) {
+            const { status, data } = await Api().get("/tipo_servicio")
+            if (status === 200) {
+                context.commit('mtaSetTipoServicioSelect', data)
+                return true
+            }
+            return false
         }
     },
     getters: {
@@ -145,14 +190,24 @@ export default new Vuex.Store({
         getEstadoDispositivoSelect: state => {
             return state.EstadoDispositivoSelect
         },
+        getEstadoServicioSelect: state => {
+            return state.EstadoServicioSelect
+        },
         getTonerSelected: state => {
             return state.TonerSelected
+        },
+        getTipoFallaSelect: state => {
+            return state.TipoFallaSelect
+        },
+        getTipoServicioSelect: state => {
+            return state.TipoServicioSelect
         }
     },
     modules: {
         users,
         dispositivos,
         empresa,
-        modeloDispositivo
+        modeloDispositivo,
+        servicios
     }
 })

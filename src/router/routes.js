@@ -25,6 +25,7 @@ import AddNewEmpresa from "@/pages/Empresas/AddNewEmpresa.vue"
 import EditEmpresa from "@/pages/Empresas/EditEmpresa.vue"
 import AddModelDevices from "@/pages/ModelDevices/AddModelDevices.vue"
 import EditModelDevices from "@/pages/ModelDevices/EditModelDevices.vue"
+import AddServicio from "@/pages/Servicios/AddServicio.vue"
 
 const routes = [
   {
@@ -73,6 +74,11 @@ const routes = [
             component: AddNewUser
           }
         ]
+      },
+      {
+        path: "servicios/add",
+        name: "Agregar Servicio",
+        component: AddServicio
       },
       {
         path: "empresas/edit",

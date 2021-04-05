@@ -3,10 +3,12 @@ import Api from '../../Services/RestApi'
 export default {
     namespaced: true,
     state: () => ({
-
+        dispositivos:[]
     }),
     mutations: {
-
+        mtaSetDispositivos(state,data){
+            state.dispositivos = data
+        }   
     },
     actions: {
         async actCreateNewDevice(context, data) {
@@ -15,15 +17,16 @@ export default {
                 REST API por que Don Miguel es muy mk 🤣😂🤣😂
             */
             const { device, checklist } = data
+
             const { status } = await Api().post("checklist", checklist)
             if (status === 200) {
                 // console.log(" Create Checklist OK");
-                const { status: stsGetLastIdCheckList, data: dtaCheckList } = await Api().get("checklist")
+                const { status: stsGetLastIdCheckList, data: dtaCheckList } = await Api().get("/checklist")
                 if (stsGetLastIdCheckList === 200) {
                     // console.log(" Get Checklist OK");
                     device.id_Check_List = dtaCheckList[dtaCheckList.length - 1].id_CheckList
                     // console.log("id checklist recuperado", device.id_Check_List);
-                    const { status: stsDevice } = await Api().post("dispositivo", device)
+                    const { status: stsDevice } = await Api().post("/dispositivo", device)
                     if (stsDevice === 200) {
                         // console.log(" Create Device OK");
                         return true
@@ -60,9 +63,26 @@ export default {
                 }
             }
             return false
+        },
+        async actValidateSerial(context,serie){
+            const { status, data } = await Api().get(`/dispositivo_x_serie/${serie}`)
+            if(status === 200 && Array.isArray(data) && data.length < 0){
+                return true
+            }
+            return false
+        },
+        async actGetDispositivos(context){
+            const {status,data} = await Api().get("/dispositivo")
+            if(status === 200){
+                context.commit('mtaSetDispositivos',data)
+                return true
+            }
+            return false
         }
     },
     getters: {
-
+        getDispositivos:state=>{
+            return state.dispositivos
+        }
     }
 }
