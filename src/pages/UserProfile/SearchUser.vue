@@ -34,7 +34,6 @@ export default {
         const rest = await this.actSearchUser(this.NumDoc);
         if (Array.isArray(rest)) {
           if (rest.length > 0) {
-            console.log("array");
             this.$emit("callback", rest[0]);
           } 
         }

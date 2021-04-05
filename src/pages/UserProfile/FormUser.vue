@@ -221,6 +221,12 @@ export default {
       "getRollSelect",
     ]),
   },
+  watch: {
+    DataUserProps(newData) {
+      this.user = { ...newData };
+      this.reptContrasena = newData.contrasena;
+    },
+  },
   methods: {
     ...mapActions([
       "actLoadEmpresaSelect",

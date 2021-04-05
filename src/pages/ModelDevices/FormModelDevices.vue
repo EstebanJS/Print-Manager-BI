@@ -134,6 +134,11 @@ export default {
   computed: {
     ...mapGetters(["getTonerSelected"]),
   },
+  watch: {
+    DataModelProps(newValue) {
+      this.model = { ...newValue };
+    },
+  },
   methods: {
     ...mapActions(["actLoadTonerSelected"]),
     ...mapActions("modeloDispositivo", [
@@ -150,7 +155,7 @@ export default {
           type: "warning",
         });
       } else {
-        this.model.paginasXMinuto = parseInt(this.model.paginasXMinuto)
+        this.model.paginasXMinuto = parseInt(this.model.paginasXMinuto);
         switch (this.ActionForm) {
           case "ADD":
             if (await this.actCreateNewModeloDispositivo(this.model)) {

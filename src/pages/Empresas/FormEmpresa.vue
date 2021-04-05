@@ -56,6 +56,11 @@ export default {
       nit_Empresa: "",
     },
   }),
+  watch: {
+    DataEmpresaProps(newData) {
+      this.empresa = { ...newData };
+    },
+  },
   methods: {
     ...mapActions("empresa", ["actCreateNewEmpresa", "actUpdateEmpresa"]),
     async EventButton() {

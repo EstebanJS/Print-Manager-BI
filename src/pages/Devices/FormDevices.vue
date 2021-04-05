@@ -265,6 +265,12 @@ export default {
       "getEstadoDispositivoSelect",
     ]),
   },
+  watch: {
+    DataDeviceProps(newValue) {
+      this.device = { ...newValue.device };
+      this.checklist = { ...newValue.checklist };
+    },
+  },
   methods: {
     ...mapActions([
       "actLoadEmpresaSelect",
