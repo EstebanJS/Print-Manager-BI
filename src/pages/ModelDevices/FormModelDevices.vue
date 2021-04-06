@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-md-4">
         <fg-input
+          v-if="ActionForm === 'ADD'"
           type="text"
           label="Nombre del modelo"
           placeholder="Ingresa el nombre del modelo"
@@ -196,7 +197,7 @@ export default {
           type: "warning",
         });
       }
-      this.model = {...this.ClearModel};
+      this.model = { ...this.ClearModel };
     },
     successMessage() {
       this.$notify({

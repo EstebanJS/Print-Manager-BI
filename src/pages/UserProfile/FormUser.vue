@@ -84,6 +84,7 @@
       </div>
       <div class="col-md-3">
         <fg-input
+        v-if="ActionForm === 'ADD'"
           type="text"
           label="Número Documento"
           placeholder="Ingrese el documento sin puntos ni comas"

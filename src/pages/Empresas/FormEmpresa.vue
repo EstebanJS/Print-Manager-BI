@@ -14,6 +14,7 @@
     <div class="row">
       <div class="col-md-12">
         <fg-input
+          v-if="ActionForm === 'ADD'"
           type="text"
           label="Número NIT o Cédula"
           placeholder="Ingrese número NIT o Cédula sin espacios ni caracteres"

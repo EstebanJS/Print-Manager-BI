@@ -33,6 +33,7 @@
       </div>
       <div class="col-md-3">
         <fg-input
+          v-if="ActionForm === 'ADD'"
           type="text"
           label="Serie"
           placeholder="Serie"
@@ -376,29 +377,27 @@ export default {
       });
     },
     formatDate(date) {
-      if(date){
+      if (date) {
         var d = new Date(date),
-        month = "" + (d.getMonth() + 1),
-        day = "" + d.getDate(),
-        year = d.getFullYear();
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
 
-      if (month.length < 2) month = "0" + month;
-      if (day.length < 2) day = "0" + day;
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
 
-      return [year, month, day].join("-");
+        return [year, month, day].join("-");
       }
-      return 'No se registra'
-      
+      return "No se registra";
     },
   },
   async created() {
     if (this.DataDeviceProps) {
       this.device = { ...this.DataDeviceProps.device };
       this.checklist = { ...this.DataDeviceProps.checklist };
-      this.fecha_ultimo_servicio = await this.actGetUltimaFechaServicio(
-        this.device.id_Dispositivo
-      ) || undefined;
-      
+      this.fecha_ultimo_servicio =
+        (await this.actGetUltimaFechaServicio(this.device.id_Dispositivo)) ||
+        undefined;
     } else {
       this.device = { ...this.ClearDevice };
       this.checklist = { ...this.ClearChecklist };
