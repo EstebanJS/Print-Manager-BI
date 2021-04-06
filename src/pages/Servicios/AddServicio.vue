@@ -56,6 +56,7 @@
           <div class="col-md-6">
             <label for="exampleFormControlSelect1">Estado</label>
             <select
+              disabled
               class="form-control"
               id="exampleFormControlSelect1"
               v-model="servicio.id_Estado_Servicio"
@@ -103,14 +104,15 @@ import { evalObjetForm } from "@/lib/validation.js";
 
 export default {
   data: () => ({
-    servicio: {
-      id_Tecnico: 1,
-      id_Dispositivo: 1,
-      id_Tipo_Servicio: 1,
+    servicio: {},
+    CleanServicio: {
+      id_Tecnico: "",
+      id_Dispositivo: "",
+      id_Tipo_Servicio: "",
       Fecha_Solicitud: "2021-03-14T00:00:00",
-      Fecha_Cierre:"2020-04-05",
+      Fecha_Cierre: "2020-04-05",
       id_Estado_Servicio: 1,
-      id_Falla: 2,
+      id_Falla: "",
       id_Usuario: 1,
     },
   }),
@@ -144,15 +146,16 @@ export default {
       } else {
         const rest = await this.actCreateNewServices(this.servicio);
         if (rest) {
-          this.successMessage(rest) 
+          this.successMessage(rest);
         } else {
-          errorMessage()
+          errorMessage();
         }
       }
+      this.servicio = { ...this.CleanServicio };
     },
     successMessage(id) {
       this.$notify({
-        message: `Proceso de Creacion de servicio exitoso, Id de servicio:${id}`,
+        message: `Proceso de Creacion de servicio exitoso, Número de servicio:${id}`,
         icon: "ti-check",
         horizontalAlign: "right",
         verticalAlign: "bottom",
@@ -170,6 +173,7 @@ export default {
     },
   },
   async created() {
+    this.servicio = { ...this.CleanServicio };
     if (this.getUsersForRoll.length === 0) {
       await this.actUsersForRoll(2);
     }

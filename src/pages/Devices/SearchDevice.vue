@@ -37,8 +37,7 @@ export default {
       ) {
         const { status, data } = await this.actSearchDivice(this.serial);
         if (status) {
-          data.device.fecha_Asignacion = this.fixDate(data.device.fecha_Asignacion);
-          data.device.fecha_Ultimo_Servicio = this.fixDate(data.device.fecha_Ultimo_Servicio);
+          data.device.fecha_Creacion_Dispositivo = this.fixDate(data.device.fecha_Creacion_Dispositivo);
           this.$emit("callback", data);
         } else {
           this.$notify({

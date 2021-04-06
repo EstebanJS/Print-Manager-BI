@@ -1,29 +1,28 @@
 export function evalObjetForm(objForm) {
-  let isValit = true;
   for (let prop in objForm) {
     if (
       objForm[prop] === '' ||
       objForm[prop] === null ||
       objForm[prop] === undefined
     ) {
-      isValit = false;
+      return false;
       break;
     }
     if (prop === 'email' || prop === 'correo') {
       if (!validarCorreo(objForm[prop])) {
         console.log('email', prop);
-        isValit = false;
+        return false;
         break;
       }
     } else {
       if (!validarCaracteres(objForm[prop])) {
         console.log('caracter', prop);
-        isValit = false;
+        return false;
         break;
       }
     }
   }
-  return isValit;
+  return true;
 }
 
 //funcion para validar caracteres especiales
@@ -42,4 +41,10 @@ export function validarCorreo(email) {
 export function validarSoloNumeros(dato) {
   const car = /^([0-9])*$/;
   return car.test(dato);
+}
+
+// funcion URL
+export function evalURL(url){
+  let regx =/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/gm
+  return regx.test(url)
 }

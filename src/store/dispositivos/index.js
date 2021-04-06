@@ -18,10 +18,10 @@ export default {
             */
             const { device, checklist } = data
 
-            const { status } = await Api().post("checklist", checklist)
+            const { status } = await Api().post("/checklist", checklist)
             if (status === 200) {
                 // console.log(" Create Checklist OK");
-                const { status: stsGetLastIdCheckList, data: dtaCheckList } = await Api().get("/checklist")
+                const { status: stsGetLastIdCheckList, data: dtaCheckList } = await Api().get("/checklist_id_mayor ")
                 if (stsGetLastIdCheckList === 200) {
                     // console.log(" Get Checklist OK");
                     device.id_Check_List = dtaCheckList[dtaCheckList.length - 1].id_CheckList
@@ -66,7 +66,7 @@ export default {
         },
         async actValidateSerial(context,serie){
             const { status, data } = await Api().get(`/dispositivo_x_serie/${serie}`)
-            if(status === 200 && Array.isArray(data) && data.length < 0){
+            if(status === 200 && Array.isArray(data) && data.length === 0){
                 return true
             }
             return false

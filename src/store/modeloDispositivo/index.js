@@ -34,7 +34,7 @@ export default {
         },
         async actValidarModelo(context, modelo) {
             const { status, data } = await Api().get(`/validar_modelo/${modelo}`)
-            if (status === 200 && Array.isArray(data) && data.length < 0) {
+            if (status === 200 && Array.isArray(data) && data.length === 0) {
                 return true
             }
             return false

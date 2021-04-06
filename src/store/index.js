@@ -146,7 +146,7 @@ export default new Vuex.Store({
         },
         async actGetUltimaFechaServicio(context, id) {
             const { status, data } = await Api().get(`/ultimo_servicio/${id}`)
-            if (status === 200) {
+            if (status === 200 && data.length > 0) {
                 return data[0].fecha_Solicitud
             }
             return undefined

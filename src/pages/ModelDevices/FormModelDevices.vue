@@ -104,7 +104,8 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import { evalObjetForm } from "@/lib/validation.js";
+import { evalObjetForm, evalURL } from "@/lib/validation.js";
+
 export default {
   props: {
     ActionForm: {
@@ -147,7 +148,46 @@ export default {
       "actValidarModelo",
     ]),
     async EventButton() {
-      if (!evalObjetForm(this.model)) {
+      let test = { ...this.model };
+      delete test.ruta_Manual_Usuario;
+      delete test.ruta_Imagen;
+      this.model.paginasXMinuto = parseInt(this.model.paginasXMinuto);
+      if (
+        evalObjetForm(this.test) &&
+        evalURL(this.model.ruta_Manual_Usuario) &&
+        evalURL(this.model.ruta_Imagen)
+      ) {
+        switch (this.ActionForm) {
+          case "ADD":
+            if (await this.actValidarModelo(this.model.nombre_Modelo)) {
+              if (await this.actCreateNewModeloDispositivo(this.model)) {
+                this.successMessage();
+              } else {
+                this.errorMessage();
+              }
+            } else {
+              this.$notify({
+                message: "Dispositivo ya se encuentra registrado",
+                icon: "ti-alert",
+                horizontalAlign: "right",
+                verticalAlign: "bottom",
+                type: "warning",
+              });
+            }
+            break;
+          case "EDIT":
+            if (await this.actUpdateModeloDispositivo(this.model)) {
+              this.successMessage();
+              this.$emit("callback");
+            } else {
+              this.errorMessage();
+            }
+            break;
+          default:
+            console.error("ERROR ACTION BUTTON IN FORM DEVICE");
+            break;
+        }
+      } else {
         this.$notify({
           message: "Campos vacios o concaracteres invalidos ($%&|<>/-)",
           icon: "ti-alert",
@@ -155,41 +195,8 @@ export default {
           verticalAlign: "bottom",
           type: "warning",
         });
-      } else {
-        if (this.actValidarModelo(this.model.nombre_Modelo)) {
-          this.model.paginasXMinuto = parseInt(this.model.paginasXMinuto);
-          switch (this.ActionForm) {
-            case "ADD":
-              if (await this.actCreateNewModeloDispositivo(this.model)) {
-                this.successMessage();
-              } else {
-                this.errorMessage();
-              }
-              break;
-            case "EDIT":
-              if (await this.actUpdateModeloDispositivo(this.model)) {
-                this.successMessage();
-                this.$emit("callback");
-              } else {
-                this.errorMessage();
-              }
-              break;
-            default:
-              console.error("ERROR ACTION BUTTON IN FORM DEVICE");
-              break;
-          }
-        } else {
-          this.$notify({
-            message: "Dispositivo ya se encuentra registrado",
-            icon: "ti-alert",
-            horizontalAlign: "right",
-            verticalAlign: "bottom",
-            type: "warning",
-          });
-        }
-
-        this.model = {};
       }
+      this.model = {...this.ClearModel};
     },
     successMessage() {
       this.$notify({

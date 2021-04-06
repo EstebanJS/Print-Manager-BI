@@ -2,7 +2,16 @@
   <form @submit.prevent>
     <div class="d-flex flex-row-reverse">
       <div v-if="ActionForm === 'EDIT'" class="p-2">
-        <strong>Ultima fecha de servicio: {{ formatDate(fecha_ultimo_servicio) }}</strong>
+        <strong
+          >Ultima fecha de Creacion:
+          {{ formatDate(device.fecha_Creacion_Dispositivo) }}</strong
+        >
+      </div>
+      <div v-if="ActionForm === 'EDIT'" class="p-2">
+        <strong
+          >Ultima fecha de servicio:
+          {{ formatDate(fecha_ultimo_servicio) }}</strong
+        >
       </div>
     </div>
     <div class="row">
@@ -230,7 +239,7 @@ export default {
       id_Empresa: "",
       id_Estado_Dispositivo: "",
       contador: "",
-      fecha_Asignacion: "2021-04-01T14:05:57.78",
+      Fecha_Creacion_Dispositivo: "2021-04-01T14:05:57.78",
     },
     checklist: {},
     ClearChecklist: {
@@ -297,9 +306,9 @@ export default {
           type: "warning",
         });
       } else {
-        if (await this.actValidateSerial(this.device.serial)) {
-          switch (this.ActionForm) {
-            case "ADD":
+        switch (this.ActionForm) {
+          case "ADD":
+            if (await this.actValidateSerial(this.device.serial)) {
               if (
                 await this.actCreateNewDevice({
                   device: this.device,
@@ -310,32 +319,32 @@ export default {
               } else {
                 this.errorMessage();
               }
-              break;
-            case "EDIT":
-              if (
-                await this.actEditDevice({
-                  device: this.device,
-                  checklist: this.checklist,
-                })
-              ) {
-                this.successMessage();
-                this.$emit("callback");
-              } else {
-                this.errorMessage();
-              }
-              break;
-            default:
-              console.error("ERROR ACTION BUTTON IN FORM DEVICE");
-              break;
-          }
-        } else {
-          this.$notify({
-            message: "Dispositivo con ese serial ya fue registrado",
-            icon: "ti-alert",
-            horizontalAlign: "right",
-            verticalAlign: "bottom",
-            type: "warning",
-          });
+            } else {
+              this.$notify({
+                message: "Dispositivo con ese serial ya fue registrado",
+                icon: "ti-alert",
+                horizontalAlign: "right",
+                verticalAlign: "bottom",
+                type: "warning",
+              });
+            }
+            break;
+          case "EDIT":
+            if (
+              await this.actEditDevice({
+                device: this.device,
+                checklist: this.checklist,
+              })
+            ) {
+              this.successMessage();
+              this.$emit("callback");
+            } else {
+              this.errorMessage();
+            }
+            break;
+          default:
+            console.error("ERROR ACTION BUTTON IN FORM DEVICE");
+            break;
         }
 
         this.device = {};
@@ -367,7 +376,8 @@ export default {
       });
     },
     formatDate(date) {
-      var d = new Date(date),
+      if(date){
+        var d = new Date(date),
         month = "" + (d.getMonth() + 1),
         day = "" + d.getDate(),
         year = d.getFullYear();
@@ -376,6 +386,9 @@ export default {
       if (day.length < 2) day = "0" + day;
 
       return [year, month, day].join("-");
+      }
+      return 'No se registra'
+      
     },
   },
   async created() {
@@ -384,8 +397,8 @@ export default {
       this.checklist = { ...this.DataDeviceProps.checklist };
       this.fecha_ultimo_servicio = await this.actGetUltimaFechaServicio(
         this.device.id_Dispositivo
-      );
-      console.log(this.fecha_ultimo_servicio);
+      ) || undefined;
+      
     } else {
       this.device = { ...this.ClearDevice };
       this.checklist = { ...this.ClearChecklist };
