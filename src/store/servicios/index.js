@@ -7,7 +7,7 @@ export default {
     mutations: {
     },
     actions: {
-        async actCreateNewServices(context, data) {
+        async actCreateNewServices(_, data) {
             const { status, } = await Api().post("/servicios", data)
             if (status === 200) {
                 const { status: stsServicios, data: dtaServicios } = await Api().get("/servicios")
@@ -40,6 +40,19 @@ export default {
                 return data
             }
             return undefined
+        },
+        async actFinalizarServicio(_, data) {
+            const { seguimiento, checkList } = data
+            const { status: stsEstado } = await Api().get(`/cambiar_estado_servicio_cerrado/${seguimiento.id_Servicio}`)
+            if (stsEstado === 200) {
+                const { status: sts } = await Api().post('/seguimientoservicio', seguimiento)
+                if (sts === 200) {
+                    const { status: sts } = await Api().post('/encuesta_servicio', checkList)
+                    if (sts === 200) {
+                        return true
+                    }
+                }
+            }
         }
     },
     getters: {}

@@ -27,6 +27,7 @@ import AddModelDevices from "@/pages/ModelDevices/AddModelDevices.vue"
 import EditModelDevices from "@/pages/ModelDevices/EditModelDevices.vue"
 import AddServicio from "@/pages/Servicios/AddServicio.vue"
 import AddSeguimiento from '@/pages/Servicios/AddSeguimiento.vue'
+import CloseServicio from '@/pages/Servicios/CloseServicio.vue'
 
 const routes = [
   {
@@ -85,6 +86,11 @@ const routes = [
         path: "servicios/add_seguimiento",
         name: "Agregar Seguimiento",
         component: AddSeguimiento
+      },
+      {
+        path: "servicios/close",
+        name:"Finalizar servicio",
+        component:CloseServicio
       },
       {
         path: "empresas/edit",

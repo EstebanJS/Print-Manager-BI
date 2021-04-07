@@ -49,13 +49,9 @@
             <i class="ti-pencil"></i>
             <p>Seguimiento</p>
           </a>
-          <a href="#" class="nav-link">
+          <a href="#/servicios/close" class="nav-link">
             <i class="ti-archive"></i>
             <p>Finalizar</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-write"></i>
-            <p>Reabrir</p>
           </a>
         </drop-down>
 
@@ -150,13 +146,9 @@
             <i class="ti-pencil"></i>
             <p>Seguimiento</p>
           </a>
-          <a href="#" class="nav-link">
+          <a href="#/servicios/close" class="nav-link">
             <i class="ti-archive"></i>
             <p>Finalizar</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-write"></i>
-            <p>Reabrir</p>
           </a>
         </drop-down>
         <drop-down

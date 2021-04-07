@@ -1,43 +1,60 @@
 <template>
-  <form @submit.prevent>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label>Tipo Seguimiento</label>
-          <textarea
-            rows="5"
-            class="form-control border-input"
-            placeholder="Descripción"
-            v-model="seguimiento.Tipo_Seguimiento"
-          >
-          </textarea>
+  <div>
+    <form @submit.prevent>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Tipo Seguimiento</label>
+            <textarea
+              rows="5"
+              class="form-control border-input"
+              placeholder="Descripción"
+              v-model="seguimiento.Tipo_Seguimiento"
+            >
+            </textarea>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="text-center">
-      <p-button type="info" round @click.native.prevent="EventButton">
-        Agregar Seguimiento
-      </p-button>
-    </div>
-    <div class="clearfix"></div>
-  </form>
+      <div class="text-center" v-if="actionForm === 'ADD'">
+        <p-button type="info" round @click.native.prevent="EventButton">
+          Agregar Seguimiento
+        </p-button>
+      </div>
+      <div class="clearfix"></div>
+    </form>
+    <FormCheckListVue
+      v-if="actionForm === 'CLOSE'"
+      :SeguimientoProps="seguimiento"
+      v-on:callback="callBackClean"
+    />
+  </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import { evalObjetForm } from "@/lib/validation.js";
+import FormCheckListVue from "./FormCheckList.vue";
+
 export default {
   props: {
+    actionForm: {
+      type: String,
+      required: true,
+      default: "ADD",
+    },
     IdServicioProp: {
       type: Number,
       require: true,
     },
   },
+  components: {
+    FormCheckListVue,
+  },
   data: () => ({
     seguimiento: {
       id_Seguimiento_Servicio: 0,
-      Tipo_Seguimiento: "Revisión del equipo",
-      id_Servicio: 15,
+      Tipo_Seguimiento: "",
+      id_Servicio: 0,
       Fecha_Seguimiento: "2020-03-29",
     },
   }),
@@ -68,6 +85,9 @@ export default {
         this.seguimiento = {};
         this.$emit("callback");
       }
+    },
+    callBackClean() {
+      this.$emit("callback");
     },
     successMessage() {
       this.$notify({
