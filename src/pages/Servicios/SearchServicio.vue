@@ -4,42 +4,42 @@
       <div class="col-md-12">
         <fg-input
           type="text"
-          label="Número NIT o Cédula"
-          placeholder="Ingrese número NIT o Cédula sin espacios ni caracteres"
-          v-model="nit"
+          label="Número de servicio"
+          placeholder="Ingrese número de servicio"
+          v-model="servicio"
         >
         </fg-input>
       </div>
     </div>
     <div>
       <p-button type="info" round @click.native.prevent="EventButton">
-        Buscar empresa
+        Buscar servicio
       </p-button>
     </div>
   </form>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import { validarCaracteres, validarSoloNumeros } from "@/lib/validation.js";
-import { mapActions } from "vuex";
 export default {
   data: () => ({
-    nit: undefined,
+    servicio: undefined,
   }),
   methods: {
-    ...mapActions("empresa", ["actSearchEmpresa"]),
+    ...mapActions('servicios',["actSearchService"]),
     async EventButton() {
       if (
-        this.nit !== "" &&
-        validarCaracteres(this.nit) &&
-        validarSoloNumeros(this.nit)
+        this.servicio !== "" &&
+        validarCaracteres(this.servicio) &&
+        validarSoloNumeros(this.servicio)
       ) {
-        const data = await this.actSearchEmpresa(this.nit);
+        const data = await this.actSearchService(this.servicio);
         if (data) {
           this.$emit("callback", data);
         } else {
           this.$notify({
-            message: "Empresa no encontrado",
+            message: "Servicio no encontrado",
             icon: "ti-alert",
             horizontalAlign: "right",
             verticalAlign: "bottom",

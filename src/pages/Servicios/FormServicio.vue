@@ -1,101 +1,120 @@
 <template>
-  <card class="card" title="Agregar Servicio">
-    <div>
-      <form @submit.prevent>
-        <div class="row">
-          <div class="col-md-4">
-            <label for="exampleFormControlSelect1">Tecnico</label>
-            <select
-              class="form-control"
-              id="exampleFormControlSelect1"
-              v-model="servicio.id_Tecnico"
-            >
-              <option
-                v-for="tecnico in getUsersForRoll"
-                :key="tecnico.id_Usuario"
-                :value="tecnico.id_Usuario"
-              >
-                {{ tecnico.nombres }}
-              </option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label for="exampleFormControlSelect1">Dispositivo</label>
-            <select
-              class="form-control"
-              id="exampleFormControlSelect1"
-              v-model="servicio.id_Dispositivo"
-            >
-              <option
-                v-for="dispositivo in getDispositivos"
-                :key="dispositivo.id_Dispositivo"
-                :value="dispositivo.id_Dispositivo"
-              >
-                {{ dispositivo.serial }}
-              </option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label for="exampleFormControlSelect1">Tipo de servicio</label>
-            <select
-              class="form-control"
-              id="exampleFormControlSelect1"
-              v-model="servicio.id_Tipo_Servicio"
-            >
-              <option
-                v-for="servi in getTipoServicioSelect"
-                :key="servi.id_Tipo_Servicio"
-                :value="servi.id_Tipo_Servicio"
-              >
-                {{ servi.nombre_Tipo_Servicio }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label for="exampleFormControlSelect1">Estado</label>
-            <select
-              disabled
-              class="form-control"
-              id="exampleFormControlSelect1"
-              v-model="servicio.id_Estado_Servicio"
-            >
-              <option
-                v-for="estado in getEstadoServicioSelect"
-                :key="estado.id_Estado_Servicio"
-                :value="estado.id_Estado_Servicio"
-              >
-                {{ estado.nombre_Estado_Servicio }}
-              </option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label for="exampleFormControlSelect1">Falla</label>
-            <select
-              class="form-control"
-              id="exampleFormControlSelect1"
-              v-model="servicio.id_Falla"
-            >
-              <option
-                v-for="falla in getTipoFallaSelect"
-                :key="falla.id_Falla"
-                :value="falla.id_Falla"
-              >
-                {{ falla.nombre_Falla }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="text-center">
-          <p-button type="info" round @click.native.prevent="EventButton">
-            Agregar Servicio
-          </p-button>
-        </div>
-        <div class="clearfix"></div>
-      </form>
+  <form @submit.prevent>
+    <div class="d-flex flex-row-reverse">
+      <div v-if="ActionForm === 'EDIT'" class="p-2">
+        <strong
+          > Fecha de solicitud:
+          {{ formatDate(servicio.fecha_Solicitud) }}</strong
+        >
+      </div>
+      <!-- <div v-if="ActionForm === 'EDIT'" class="p-2">
+        <strong
+          >Ultima fecha de servicio:
+          {{ formatDate(fecha_ultimo_servicio) }}</strong
+        >
+      </div> -->
     </div>
-  </card>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="exampleFormControlSelect1">Tecnico</label>
+        <select
+          :disabled="ActionForm === 'EDIT'"
+          class="form-control"
+          id="exampleFormControlSelect1"
+          v-model="servicio.id_Tecnico"
+        >
+          <option
+            v-for="tecnico in getUsersForRoll"
+            :key="tecnico.id_Usuario"
+            :value="tecnico.id_Usuario"
+          >
+            {{ tecnico.nombres }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="exampleFormControlSelect1">Dispositivo</label>
+        <select
+          :disabled="ActionForm === 'EDIT'"
+          class="form-control"
+          id="exampleFormControlSelect1"
+          v-model="servicio.id_Dispositivo"
+        >
+          <option
+            v-for="dispositivo in getDispositivos"
+            :key="dispositivo.id_Dispositivo"
+            :value="dispositivo.id_Dispositivo"
+          >
+            {{ dispositivo.serial }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="exampleFormControlSelect1">Tipo de servicio</label>
+        <select
+          :disabled="ActionForm === 'EDIT'"
+          class="form-control"
+          id="exampleFormControlSelect1"
+          v-model="servicio.id_Tipo_Servicio"
+        >
+          <option
+            v-for="servi in getTipoServicioSelect"
+            :key="servi.id_Tipo_Servicio"
+            :value="servi.id_Tipo_Servicio"
+          >
+            {{ servi.nombre_Tipo_Servicio }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="exampleFormControlSelect1">Estado</label>
+        <select
+          disabled
+          class="form-control"
+          id="exampleFormControlSelect1"
+          v-model="servicio.id_Estado_Servicio"
+        >
+          <option
+            v-for="estado in getEstadoServicioSelect"
+            :key="estado.id_Estado_Servicio"
+            :value="estado.id_Estado_Servicio"
+          >
+            {{ estado.nombre_Estado_Servicio }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="exampleFormControlSelect1">Falla</label>
+        <select
+          :disabled="ActionForm === 'EDIT'"
+          class="form-control"
+          id="exampleFormControlSelect1"
+          v-model="servicio.id_Falla"
+        >
+          <option
+            v-for="falla in getTipoFallaSelect"
+            :key="falla.id_Falla"
+            :value="falla.id_Falla"
+          >
+            {{ falla.nombre_Falla }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="text-center">
+      <p-button
+        v-if="ActionForm === 'ADD'"
+        type="info"
+        round
+        @click.native.prevent="EventButton"
+      >
+        Agregar Servicio
+      </p-button>
+    </div>
+    <div class="clearfix"></div>
+  </form>
 </template>
 
 <script>
@@ -136,6 +155,13 @@ export default {
       "getTipoServicioSelect",
       "getEstadoServicioSelect",
     ]),
+  },
+  watch: {
+    DataServiceProps(newValue) {
+      if (newValue) {
+        this.servicio = { ...newValue };
+      }
+    },
   },
   methods: {
     ...mapActions("users", ["actUsersForRoll"]),
@@ -183,9 +209,27 @@ export default {
         type: "danger",
       });
     },
+    formatDate(date) {
+      if (date) {
+        var d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
+
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
+
+        return [year, month, day].join("-");
+      }
+      return "No se registra";
+    },
   },
   async created() {
-    this.servicio = { ...this.CleanServicio };
+    if (this.DataServiceProps) {
+      this.servicio = { ...this.DataServiceProps };
+    } else {
+      this.servicio = { ...this.CleanServicio };
+    }
     if (this.getUsersForRoll.length === 0) {
       await this.actUsersForRoll(2);
     }

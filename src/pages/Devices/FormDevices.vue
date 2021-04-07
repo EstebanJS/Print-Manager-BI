@@ -3,13 +3,13 @@
     <div class="d-flex flex-row-reverse">
       <div v-if="ActionForm === 'EDIT'" class="p-2">
         <strong
-          >Ultima fecha de Creacion:
+          >Fecha de Creacion:
           {{ formatDate(device.fecha_Creacion_Dispositivo) }}</strong
         >
       </div>
       <div v-if="ActionForm === 'EDIT'" class="p-2">
         <strong
-          >Ultima fecha de servicio:
+          >Fecha ultimo servicio:
           {{ formatDate(fecha_ultimo_servicio) }}</strong
         >
       </div>

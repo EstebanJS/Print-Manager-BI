@@ -1,5 +1,5 @@
 <template>
-  <card class="card">
+  <card class="card" title="Editar Usuario">
     <div>
       <SearchUserVue v-on:callback="callBackSearchUser" />
     </div>

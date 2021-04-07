@@ -1,5 +1,5 @@
 <template>
-  <card class="card">
+  <card class="card" title="Agregar Usuario">
     <div>
       <FormUserVue ActionForm="ADD"/>
     </div>

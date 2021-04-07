@@ -45,9 +45,9 @@
             <i class="ti-plus"></i>
             <p>Agregar</p>
           </a>
-          <a href="#" class="nav-link">
+          <a href="#/servicios/add_seguimiento" class="nav-link">
             <i class="ti-pencil"></i>
-            <p>Editar</p>
+            <p>Seguimiento</p>
           </a>
           <a href="#" class="nav-link">
             <i class="ti-archive"></i>
@@ -146,9 +146,9 @@
             <i class="ti-plus"></i>
             <p>Agregar</p>
           </a>
-          <a href="#" class="nav-link">
+          <a href="#/servicios/add_seguimiento" class="nav-link">
             <i class="ti-pencil"></i>
-            <p>Editar</p>
+            <p>Seguimiento</p>
           </a>
           <a href="#" class="nav-link">
             <i class="ti-archive"></i>

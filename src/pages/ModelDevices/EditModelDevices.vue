@@ -1,5 +1,5 @@
 <template>
-  <card class="card">
+  <card class="card" title="Editar Modelo Dispositivo">
     <div>
       <SearchModelDevicesVue v-on:callback="callBackSearchModelo"/>
     </div>
