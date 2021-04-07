@@ -11,6 +11,9 @@
       />
     </div>
     <div>
+      <TableDataVue v-if="InfoServicio" :TableHeaders="headers" :data="body" />
+    </div>
+    <div>
       <FormSeguimientoVue
         v-if="InfoServicio"
         :IdServicioProp="InfoServicio.id_Servicio"
@@ -21,19 +24,37 @@
 </template>
 
 <script>
+import TableDataVue from "./TableData.vue";
 import FormSeguimientoVue from "./FormSeguimiento.vue";
 import FormServicioVue from "./FormServicio.vue";
 import SearchServicioVue from "./SearchServicio.vue";
+import { mapActions } from "vuex";
+import {formatDate} from '@/lib/until'
 export default {
   components: {
     SearchServicioVue,
     FormServicioVue,
     FormSeguimientoVue,
+    TableDataVue,
   },
   data: () => ({
     InfoServicio: undefined,
+    headers: ["Actualizado por", "Correo","Estado","Seguimiento","Fecha"],
+    body: [],
   }),
+  watch: {
+    async InfoServicio(newValue) {
+      if (newValue) {
+        let aux = await this.actListarSeguimientoServicio(newValue.id_Servicio)
+        this.body = aux.map(item => {
+          item.fecha_Seguimiento = formatDate(item.fecha_Seguimiento)
+          return item
+        })
+      }
+    },
+  },
   methods: {
+    ...mapActions("servicios", ["actListarSeguimientoServicio"]),
     callBackSearchServicio(data) {
       if (typeof data === "object") {
         this.InfoServicio = data;
