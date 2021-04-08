@@ -28,6 +28,7 @@ import EditModelDevices from "@/pages/ModelDevices/EditModelDevices.vue"
 import AddServicio from "@/pages/Servicios/AddServicio.vue"
 import AddSeguimiento from '@/pages/Servicios/AddSeguimiento.vue'
 import CloseServicio from '@/pages/Servicios/CloseServicio.vue'
+import LoginPage from '@/pages/Login/LoginPage.vue'
 
 const routes = [
   {
@@ -35,6 +36,7 @@ const routes = [
     component: DashboardLayout,
     redirect: "/dashboard",
     children: [
+
       {
         path: "dashboard",
         name: "dashboard",
@@ -89,8 +91,8 @@ const routes = [
       },
       {
         path: "servicios/close",
-        name:"Finalizar servicio",
-        component:CloseServicio
+        name: "Finalizar servicio",
+        component: CloseServicio
       },
       {
         path: "empresas/edit",
@@ -128,6 +130,11 @@ const routes = [
         component: TableList
       }
     ]
+  },
+  {
+    path: "/login",
+    name: "Loging",
+    component: LoginPage
   },
   { path: "*", component: NotFound }
 ];

@@ -4,94 +4,23 @@
       <template slot="links">
         <sidebar-link to="/dashboard" name="Dashboard" icon="ti-panel" />
         <drop-down
+          v-for="section in PermisosRoles"
+          :key="section.name"
+          v-if="getValidSection(section.permisos)"
           class="nav-item resposive-menu"
-          title="Dispositivos"
+          :title="section.name"
           title-classes="nav-link"
-          icon="ti-printer"
+          :icon="section.icon"
         >
-          <a href="#/devices/add" class="nav-link">
-            <i class="ti-plus"></i>
-            <p>Agregar</p>
-          </a>
-          <a href="#/devices/edit" class="nav-link">
-            <i class="ti-pencil"></i>
-            <p>Editar</p>
-          </a>
-        </drop-down>
-
-        <drop-down
-          class="nav-item resposive-menu"
-          title="Modelo Dispositivos"
-          title-classes="nav-link"
-          icon="ti-harddrives"
-        >
-          <a href="#/model_devices/add" class="nav-link">
-            <i class="ti-plus"></i>
-            <p>Agregar</p>
-          </a>
-          <a href="#/model_devices/edit" class="nav-link">
-            <i class="ti-pencil"></i>
-            <p>Editar</p>
-          </a>
-        </drop-down>
-
-        <drop-down
-          class="nav-item resposive-menu"
-          title="Servicios"
-          title-classes="nav-link"
-          icon="ti-ticket"
-        >
-          <a href="#/servicios/add" class="nav-link">
-            <i class="ti-plus"></i>
-            <p>Agregar</p>
-          </a>
-          <a href="#/servicios/add_seguimiento" class="nav-link">
-            <i class="ti-pencil"></i>
-            <p>Seguimiento</p>
-          </a>
-          <a href="#/servicios/close" class="nav-link">
-            <i class="ti-archive"></i>
-            <p>Finalizar</p>
-          </a>
-        </drop-down>
-
-        <drop-down
-          class="nav-item resposive-menu"
-          title="Usuarios"
-          title-classes="nav-link"
-          icon="ti-user"
-        >
-          <a href="#/users/add" class="nav-link">
-            <i class="ti-plus"></i>
-            <p>Agregar</p>
-          </a>
-          <a href="#/users/edit" class="nav-link">
-            <i class="ti-pencil"></i>
-            <p>Editar</p>
-          </a>
-          <!-- <a href="#" class="nav-link">
-            <i class="ti-na"></i>
-            <p>Deshabilitar</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-check"></i>
-            <p>Habilitar</p>
-          </a> -->
-        </drop-down>
-
-        <drop-down
-          class="nav-item resposive-menu"
-          title="Empresas"
-          title-classes="nav-link"
-          icon="ti-briefcase"
-        >
-          <a href="#/empresas/add" class="nav-link">
-            <i class="ti-plus"></i>
-            <p>Agregar</p>
-          </a>
-          <a href="#/empresas/edit" class="nav-link">
-            <i class="ti-pencil"></i>
-            <p>Editar</p>
+          <a
+            v-for="permiso in section.permisos"
+            :key="permiso.id"
+            :href="permiso.path"
+            v-if="getValidPermises(permiso.id)"
+            class="nav-link"
+          >
+            <i :class="permiso.icon"></i>
+            <p>{{ permiso.name }}</p>
           </a>
         </drop-down>
       </template>
@@ -103,119 +32,26 @@
           </a>
         </li>
         <drop-down
+          v-for="section in PermisosRoles"
+          :key="section.name"
+          v-if="getValidSection(section.permisos)"
           class="nav-item"
-          title="Dispositivos"
+          :title="section.name"
           title-classes="nav-link"
-          icon="ti-printer"
+          :icon="section.icon"
         >
-          <a href="#/devices/add" class="nav-link">
-            <i class="ti-plus"></i>
-            <p>Agregar</p>
-          </a>
-          <a href="#/devices/edit" class="nav-link">
-            <i class="ti-pencil"></i>
-            <p>Editar</p>
+          <a
+            v-for="permiso in section.permisos"
+            :key="permiso.id"
+            v-if="getValidPermises(permiso.id)"
+            :href="permiso.path"
+            class="nav-link"
+          >
+            <i :class="permiso.icon"></i>
+            <p>{{ permiso.name }}</p>
           </a>
         </drop-down>
-        <drop-down
-          class="nav-item"
-          title="Modelo Dispositivos"
-          title-classes="nav-link"
-          icon="ti-harddrives"
-        >
-          <a href="#/model_devices/add" class="nav-link">
-            <i class="ti-plus"></i>
-            <p>Agregar</p>
-          </a>
-          <a href="#/model_devices/edit" class="nav-link">
-            <i class="ti-pencil"></i>
-            <p>Editar</p>
-          </a>
-        </drop-down>
-        <drop-down
-          class="nav-item"
-          title="Servicios"
-          title-classes="nav-link"
-          icon="ti-ticket"
-        >
-          <a href="#/servicios/add" class="nav-link">
-            <i class="ti-plus"></i>
-            <p>Agregar</p>
-          </a>
-          <a href="#/servicios/add_seguimiento" class="nav-link">
-            <i class="ti-pencil"></i>
-            <p>Seguimiento</p>
-          </a>
-          <a href="#/servicios/close" class="nav-link">
-            <i class="ti-archive"></i>
-            <p>Finalizar</p>
-          </a>
-        </drop-down>
-        <drop-down
-          class="nav-item"
-          title="Usuarios"
-          title-classes="nav-link"
-          icon="ti-user"
-        >
-          <a href="#/users/add" class="nav-link">
-            <i class="ti-plus"></i>
-            <p>Agregar</p>
-          </a>
-          <a href="#/users/edit" class="nav-link">
-            <i class="ti-pencil"></i>
-            <p>Editar</p>
-          </a>
-          <!-- <a href="#" class="nav-link">
-            <i class="ti-na"></i>
-            <p>Deshabilitar</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-check"></i>
-            <p>Habilitar</p>
-          </a> -->
-        </drop-down>
-        <drop-down
-          class="nav-item"
-          title="Empresas"
-          title-classes="nav-link"
-          icon="ti-briefcase"
-        >
-          <a href="#/empresas/add" class="nav-link">
-            <i class="ti-plus"></i>
-            <p>Agregar</p>
-          </a>
-          <a href="#/empresas/edit" class="nav-link">
-            <i class="ti-pencil"></i>
-            <p>Editar</p>
-          </a>
-          <!-- <a href="#" class="nav-link">
-            <i class="ti-na"></i>
-            <p>Deshabilitar</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-check"></i>
-            <p>Habilitar</p>
-          </a> -->
-        </drop-down>
-        <drop-down
-          class="nav-item"
-          title="Opciones"
-          title-classes="nav-link"
-          icon="ti-settings"
-        >
-          <a href="#" class="nav-link">
-            <i class="ti-info"></i>
-            <p>Acerca de</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-id-badge"></i>
-            <p>Perfil</p>
-          </a>
-          <a href="#" class="nav-link">
-            <i class="ti-unlock"></i>
-            <p>Salir</p>
-          </a>
-        </drop-down>
+
         <li class="divider"></li>
       </mobile-menu>
     </side-bar>
@@ -235,12 +71,116 @@ import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "./MobileMenu";
+import { mapGetters } from "vuex";
 export default {
   components: {
     TopNavbar,
     ContentFooter,
     DashboardContent,
     MobileMenu,
+  },
+  data: () => ({
+    PermisosRoles: [
+      {
+        name: "Dispostivios",
+        icon: "ti-printer",
+        permisos: [
+          {
+            id: 9,
+            name: "Agregar",
+            path: "#/devices/add",
+            icon: "ti-plus",
+          },
+          {
+            id: 10,
+            name: "Editar",
+            path: "#/devices/edit",
+            icon: "ti-pencil",
+          },
+        ],
+      },
+      {
+        name: "Modelo dispositivo",
+        icon: "ti-harddrives",
+        permisos: [
+          {
+            id: 19,
+            name: "Agregar",
+            path: "#/model_devices/add",
+            icon: "ti-plus",
+          },
+          {
+            id: 21,
+            name: "Editar",
+            path: "#/devices/edit",
+            icon: "ti-pencil",
+          },
+        ],
+      },
+      {
+        name: "Servicios",
+        icon: "ti-ticket",
+        permisos: [
+          {
+            id: 15,
+            name: "Agregar",
+            path: "#/servicios/add",
+            icon: "ti-plus",
+          },
+          {
+            id: 16,
+            name: "Editar",
+            path: "#/servicios/add_seguimiento",
+            icon: "ti-pencil",
+          },
+          {
+            id: 17,
+            name: "Funalizar",
+            path: "#/servicios/close",
+            icon: "ti-archive",
+          },
+        ],
+      },
+      {
+        name: "Usuario",
+        icon: "ti-user",
+        permisos: [
+          {
+            id: 1,
+            name: "Agregar",
+            path: "#/users/add",
+            icon: "ti-plus",
+          },
+          {
+            id: 6,
+            name: "Editar",
+            path: "#/users/edit",
+            icon: "ti-pencil",
+          },
+        ],
+      },
+      {
+        name: "Empresas",
+        icon: "ti-briefcase",
+        permisos: [
+          {
+            id: 22,
+            name: "Agregar",
+            path: "#/empresas/add",
+            icon: "ti-plus",
+          },
+          {
+            id: 23,
+            name: "Editar",
+            path: "#/empresas/edit",
+            icon: "ti-pencil",
+          },
+        ],
+      },
+    ],
+  }),
+  computed: {
+    ...mapGetters("users", ["getValidPermises", "getValidSection"]),
   },
   methods: {
     toggleSidebar() {

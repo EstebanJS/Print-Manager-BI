@@ -2,15 +2,19 @@ import Api from '../../Services/RestApi'
 export default {
     namespaced: true,
     state: () => ({
+        sesion: {},
         usersForRoll: []
     }),
     mutations: {
         mtdUsersForRoll(state, data) {
             state.usersForRoll = data
+        },
+        mtaSetDataUserSesion(state, data) {
+            state.sesion = data
         }
     },
     actions: {
-        async actCreateNewUser(context, data) {
+        async actCreateNewUser(_, data) {
 
             const { status } = await Api().post("/usuario", data)
             if (status === 200) {
@@ -18,7 +22,7 @@ export default {
             }
             return false
         },
-        async actValidacionCorreoDocumento(context, data) {
+        async actValidacionCorreoDocumento(_, data) {
             const { numero_Doc, correo } = data
             const { status: stsDocumento, data: dtaDocumento } = await Api().get(`/validar_correo/${numero_Doc}`)
             if (stsDocumento === 200 && Array.isArray(dtaDocumento) && dtaDocumento.length === 0) {
@@ -32,14 +36,14 @@ export default {
             }
             return false
         },
-        async actSearchUser(context, doc) {
+        async actSearchUser(_, doc) {
             const { status, data } = await Api().get(`/num_doc/${doc}`)
             if (status === 200) {
                 return data
             }
             return false
         },
-        async actUpdateUser(context, data) {
+        async actUpdateUser(_, data) {
             const { status } = await Api().put(`/usuario/${data.id_usuario}/`, data)
             if (status === 200) {
                 return true
@@ -53,12 +57,54 @@ export default {
                 return true
             }
             return false
+        },
+        async actLogin(context, data) {
+            console.log('Entra', data);
+            const { status, data: UserData } = await Api().post('/validacion_usuario_login', data)
+            console.log('status', status);
+            if (status === 200 && Array.isArray(UserData) && UserData.length > 0) {
+
+                const { status: sts, data: permisos } = await Api().get(`/permisos/${UserData[0].id_Rol}`)
+                if (sts === 200) {
+                    context.commit('mtaSetDataUserSesion', { UserData: UserData[0], Permisos: permisos })
+                    localStorage.setItem('sesion', JSON.stringify({ UserData: UserData[0], Permisos: permisos }))
+                    return true
+                }
+            }
+            return false
+        },
+        async actCheckUserLogin(context) {
+            if (localStorage.getItem('sesion')) {
+                context.commit('mtaSetDataUserSesion', JSON.parse(localStorage.getItem('sesion')))
+                return true
+            }
+            return false
         }
 
     },
     getters: {
         getUsersForRoll: state => {
             return state.usersForRoll
+        },
+        getValidPermises: state => (id) => {
+            if (state.sesion.Permisos) {
+                let rest = state.sesion.Permisos.findIndex(item => item.id_Permiso === id)
+                return rest > -1 ? true : false
+            }
+            return false
+        },
+        getValidSection: state => permisos => {
+            for (let permiso of permisos) {
+                if (state.sesion.Permisos) {
+                    let rest = state.sesion.Permisos.findIndex(item => item.id_Permiso === permiso.id)
+                    if(rest > -1){
+                        return true
+                    }
+                }else{
+                    return false
+                }
+            }
+            return false
         }
     }
 }

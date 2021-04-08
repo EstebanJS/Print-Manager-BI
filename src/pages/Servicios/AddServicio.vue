@@ -1,7 +1,7 @@
 <template>
   <card class="card" title="Agregar Servicio">
     <div>
-      <FormServicio />
+      <FormServicio ActionForm="ADD"/>
     </div>
   </card>
 </template>

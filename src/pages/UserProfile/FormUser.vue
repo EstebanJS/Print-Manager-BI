@@ -84,7 +84,7 @@
       </div>
       <div class="col-md-3">
         <fg-input
-        v-if="ActionForm === 'ADD'"
+          v-if="ActionForm === 'ADD'"
           type="text"
           label="Número Documento"
           placeholder="Ingrese el documento sin puntos ni comas"
@@ -131,7 +131,7 @@
       </div>
     </div>
 
-    <div v-if="this.ActionForm === 'ADD'" class="row">
+    <!-- <div v-if="this.ActionForm === 'EDIT'" class="row">
       <div class="col-md-6">
         <fg-input
           type="password"
@@ -150,7 +150,7 @@
         >
         </fg-input>
       </div>
-    </div>
+    </div> -->
     <!-- <div class="row">
       <div class="col-md-12">
         <div class="form-group">
@@ -242,10 +242,7 @@ export default {
       "actValidacionCorreoDocumento",
     ]),
     async EventButton() {
-      if (
-        !evalObjetForm(this.user) ||
-        this.user.contrasena != this.reptContrasena
-      ) {
+      if (!evalObjetForm(this.user)) {
         this.$notify({
           message: "Campos vacios o concaracteres invalidos ($%&|<>/-)",
           icon: "ti-alert",
@@ -257,7 +254,7 @@ export default {
         switch (this.ActionForm) {
           case "ADD":
             if (await this.actValidacionCorreoDocumento(this.user)) {
-              this.user.contrasena = sha256(this.user.contrasena);
+              this.user.contrasena = sha256(this.user.numero_Doc);
               if (await this.actCreateNewUser(this.user)) {
                 this.successMessage();
               } else {
@@ -275,12 +272,23 @@ export default {
 
             break;
           case "EDIT":
-            if (await this.actUpdateUser(this.user)) {
-              this.successMessage();
-              this.$emit("callback");
+            if (this.user.contrasena === this.reptContrasena) {
+              if (await this.actUpdateUser(this.user)) {
+                this.successMessage();
+                this.$emit("callback");
+              } else {
+                this.errorMessage();
+              }
             } else {
-              this.errorMessage();
+              this.$notify({
+                message: "Las contraseñas no coinciden. vuelve a intentarlo",
+                icon: "ti-alert",
+                horizontalAlign: "right",
+                verticalAlign: "bottom",
+                type: "warning",
+              });
             }
+
             break;
           default:
             console.error("ERROR ACTION BUTTON IN FORM USER");
