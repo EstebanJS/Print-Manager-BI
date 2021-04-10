@@ -59,9 +59,9 @@ export default {
             return false
         },
         async actLogin(context, data) {
-            console.log('Entra', data);
+
             const { status, data: UserData } = await Api().post('/validacion_usuario_login', data)
-            console.log('status', status);
+
             if (status === 200 && Array.isArray(UserData) && UserData.length > 0) {
 
                 const { status: sts, data: permisos } = await Api().get(`/permisos/${UserData[0].id_Rol}`)
@@ -79,6 +79,14 @@ export default {
                 return true
             }
             return false
+        },
+        async actLogout(context) {
+            localStorage.removeItem('sesion')
+            context.commit('mtaSetDataUserSesion', {})
+            if (localStorage.getItem('sesion')) {
+                return false
+            }
+            return true
         }
 
     },
@@ -97,14 +105,17 @@ export default {
             for (let permiso of permisos) {
                 if (state.sesion.Permisos) {
                     let rest = state.sesion.Permisos.findIndex(item => item.id_Permiso === permiso.id)
-                    if(rest > -1){
+                    if (rest > -1) {
                         return true
                     }
-                }else{
+                } else {
                     return false
                 }
             }
             return false
+        },
+        getDataUser: state => {
+            return state.sesion.UserData
         }
     }
 }

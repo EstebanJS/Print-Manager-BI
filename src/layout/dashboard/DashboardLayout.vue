@@ -2,7 +2,12 @@
   <div class="wrapper">
     <side-bar>
       <template slot="links">
-        <sidebar-link to="/dashboard" name="Dashboard" icon="ti-panel" />
+        <sidebar-link
+          to="/dashboard"
+          name="Dashboard"
+          icon="ti-panel"
+          v-if="getValidPermises(24)"
+        />
         <drop-down
           v-for="section in PermisosRoles"
           :key="section.name"
@@ -51,8 +56,26 @@
             <p>{{ permiso.name }}</p>
           </a>
         </drop-down>
-
         <li class="divider"></li>
+        <drop-down
+          class="nav-item"
+          title="Opciones"
+          title-classes="nav-link"
+          icon="ti-settings"
+        >
+          <a href="#" class="nav-link">
+            <i class="ti-info"></i>
+            <p>Acerca de</p>
+          </a>
+          <a href="#/perfil" class="nav-link">
+            <i class="ti-id-badge"></i>
+            <p>Perfil</p>
+          </a>
+          <a class="nav-link" @click="LogOut">
+            <i class="ti-unlock"></i>
+            <p>Salir</p>
+          </a>
+        </drop-down>
       </mobile-menu>
     </side-bar>
     <div class="main-panel">
@@ -71,7 +94,7 @@ import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "./MobileMenu";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     TopNavbar,
@@ -129,7 +152,7 @@ export default {
           },
           {
             id: 16,
-            name: "Editar",
+            name: "Seguimiento",
             path: "#/servicios/add_seguimiento",
             icon: "ti-pencil",
           },
@@ -142,7 +165,7 @@ export default {
         ],
       },
       {
-        name: "Usuario",
+        name: "Usuarios",
         icon: "ti-user",
         permisos: [
           {
@@ -181,13 +204,36 @@ export default {
   }),
   computed: {
     ...mapGetters("users", ["getValidPermises", "getValidSection"]),
+
   },
   methods: {
+    ...mapActions("users", ["actLogout"]),
     toggleSidebar() {
       if (this.$sidebar.showSidebar) {
         this.$sidebar.displaySidebar(false);
       }
     },
+    LogOut() {
+      if (this.actLogout()) {
+        this.$notify({
+          message: "hasta la proxima",
+          icon: "ti-check",
+          horizontalAlign: "right",
+          verticalAlign: "bottom",
+          type: "success",
+        });
+        this.$router.push({ path: "/login" });
+      } else {
+        this.$notify({
+          message: "Error de logout",
+          icon: "ti-na",
+          horizontalAlign: "right",
+          verticalAlign: "bottom",
+          type: "danger",
+        });
+      }
+    },
   },
+  created() {},
 };
 </script>

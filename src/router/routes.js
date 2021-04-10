@@ -29,6 +29,7 @@ import AddServicio from "@/pages/Servicios/AddServicio.vue"
 import AddSeguimiento from '@/pages/Servicios/AddSeguimiento.vue'
 import CloseServicio from '@/pages/Servicios/CloseServicio.vue'
 import LoginPage from '@/pages/Login/LoginPage.vue'
+import Perfil from '@/pages/Perfil/Perfil.vue'
 
 const routes = [
   {
@@ -105,6 +106,11 @@ const routes = [
         component: AddNewEmpresa
       },
       {
+        path:"perfil",
+        name:"Perfil",
+        component:Perfil
+      },
+      {
         path: "notifications",
         name: "notifications",
         component: Notifications
@@ -133,7 +139,7 @@ const routes = [
   },
   {
     path: "/login",
-    name: "Loging",
+    name: "login",
     component: LoginPage
   },
   { path: "*", component: NotFound }
