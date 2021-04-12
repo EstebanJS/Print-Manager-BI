@@ -158,7 +158,7 @@ export default {
           },
           {
             id: 17,
-            name: "Funalizar",
+            name: "Finalizar",
             path: "#/servicios/close",
             icon: "ti-archive",
           },

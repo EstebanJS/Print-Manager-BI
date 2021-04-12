@@ -1,6 +1,5 @@
 <template>
-  <form @submit.prevent>
-    <h5 class="text-center">Encuesta de servicio</h5>
+  <form @submit.prevent class="px-5 py-5">
     <div class="row">
       <div class="col-md-12">
         <label>Nivel de Satisfacción con el Equipo</label>
@@ -64,24 +63,20 @@
         </div>
       </div>
     </div>
-    <div class="text-center my-3">
+    <br />
+    <div class="d-flex justify-content-center">
       <p-button type="info" round @click.native.prevent="EventButton">
-        Finalizar Servicio
+        Finalizar Encuesta
       </p-button>
     </div>
-    <div class="clearfix"></div>
   </form>
 </template>
 
 <script>
 import { evalObjetForm } from "@/lib/validation.js";
-import { mapActions } from "vuex";
 export default {
   props: {
-    SeguimientoProps: {
-      type: Object,
-      required: true,
-    },
+    
   },
   data: () => ({
     checkList: {
@@ -93,34 +88,7 @@ export default {
     },
   }),
   methods: {
-    ...mapActions("servicios", ["actFinalizarServicio"]),
-    async EventButton() {
-      if (
-        evalObjetForm(this.SeguimientoProps) &&
-        evalObjetForm(this.checkList)
-      ) {
-        if (
-          await this.actFinalizarServicio({
-            seguimiento: this.SeguimientoProps,
-            checkList: this.checkList,
-          })
-        ) {
-          this.successMessage();
-        } else {
-          this.errorMessage;
-        }
-        this.checkList = {};
-        this.$emit("callback");
-      } else {
-        this.$notify({
-          message: "Campos vacios o concaracteres invalidos ($%&|<>/-)",
-          icon: "ti-alert",
-          horizontalAlign: "right",
-          verticalAlign: "bottom",
-          type: "warning",
-        });
-      }
-    },
+    EventButton() {},
     successMessage() {
       this.$notify({
         message: `Proceso de creacion de seguimiento exitoso`,

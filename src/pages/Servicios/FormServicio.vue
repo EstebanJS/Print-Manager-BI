@@ -2,9 +2,8 @@
   <form @submit.prevent>
     <div class="d-flex flex-row-reverse">
       <div v-if="ActionForm === 'EDIT'" class="p-2">
-        <strong
-          > Fecha de solicitud:
-          {{ formatDate(servicio.fecha_Solicitud) }}</strong
+        <strong>
+          Fecha de solicitud: {{ formatDate(servicio.fecha_Solicitud) }}</strong
         >
       </div>
       <!-- <div v-if="ActionForm === 'EDIT'" class="p-2">
@@ -16,29 +15,12 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <label for="exampleFormControlSelect1">Tecnico</label>
-        <select
-          :disabled="ActionForm === 'EDIT'"
-          class="form-control"
-          id="exampleFormControlSelect1"
-          v-model="servicio.id_Tecnico"
-        >
-          <option
-            v-for="tecnico in getUsersForRoll"
-            :key="tecnico.id_Usuario"
-            :value="tecnico.id_Usuario"
-          >
-            {{ tecnico.nombres }}
-          </option>
-        </select>
-      </div>
-      <div class="col-md-4">
         <label for="exampleFormControlSelect1">Dispositivo</label>
         <select
           :disabled="ActionForm === 'EDIT'"
           class="form-control"
           id="exampleFormControlSelect1"
-          v-model="servicio.id_Dispositivo"
+          v-model="id_Dispositivo"
         >
           <option
             v-for="dispositivo in getDispositivos"
@@ -48,6 +30,25 @@
             {{ dispositivo.serial }}
           </option>
         </select>
+      </div>
+      <div class="col-md-4">
+        <label for="exampleFormControlSelect1">Tecnico</label>
+        <select
+          v-if="Tecnicos.length > 0"
+          :disabled="ActionForm === 'EDIT'"
+          class="form-control"
+          id="exampleFormControlSelect1"
+          v-model="servicio.id_Tecnico"
+        >
+          <option
+            v-for="tecnico in Tecnicos"
+            :key="tecnico.id_Usuario"
+            :value="tecnico.id_Usuario"
+          >
+            {{ tecnico.nombres }}
+          </option>
+        </select>
+        <p v-else>No se encontro tenico disponible</p>
       </div>
       <div class="col-md-4">
         <label for="exampleFormControlSelect1">Tipo de servicio</label>
@@ -120,7 +121,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { evalObjetForm } from "@/lib/validation.js";
-
+import { sha256 } from "@/lib/bcrypt.js";
 export default {
   props: {
     ActionForm: {
@@ -144,12 +145,13 @@ export default {
       Fecha_Cierre: "2020-04-05",
       id_Estado_Servicio: 1,
       id_Falla: "",
-      id_Usuario: 1,
+      id_Usuario: 1
     },
+    id_Dispositivo: "",
+    Tecnicos: [],
   }),
   computed: {
-    ...mapGetters("users", ["getUsersForRoll"]),
-    ...mapGetters("dispositivos", ["getDispositivos"]),
+    ...mapGetters("dispositivos", ["getDispositivos", "getDispositivo"]),
     ...mapGetters([
       "getTipoFallaSelect",
       "getTipoServicioSelect",
@@ -160,6 +162,19 @@ export default {
     DataServiceProps(newValue) {
       if (newValue) {
         this.servicio = { ...newValue };
+      }
+    },
+    async id_Dispositivo(val) {
+      this.servicio.id_Dispositivo = val;
+      this.Tecnicos = [];
+      if (val !== "") {
+        let dispo = this.getDispositivo(val);
+        if (dispo.id_Ciudad !== "") {
+          this.Tecnicos = await this.actUsersForRoll({
+            id_Rol: 2,
+            id_Ciudad: dispo.id_Ciudad,
+          });
+        }
       }
     },
   },
@@ -182,6 +197,7 @@ export default {
           type: "warning",
         });
       } else {
+        this.servicio.URL_Encuesta = sha256(JSON.stringify(this.servicio))
         const rest = await this.actCreateNewServices(this.servicio);
         if (rest) {
           this.successMessage(rest);
@@ -229,9 +245,6 @@ export default {
       this.servicio = { ...this.DataServiceProps };
     } else {
       this.servicio = { ...this.CleanServicio };
-    }
-    if (this.getUsersForRoll.length === 0) {
-      await this.actUsersForRoll(2);
     }
     if (this.getDispositivos.length === 0) {
       await this.actGetDispositivos();

@@ -42,15 +42,11 @@ export default {
             return undefined
         },
         async actFinalizarServicio(_, data) {
-            const { seguimiento, checkList } = data
-            const { status: stsEstado } = await Api().get(`/cambiar_estado_servicio_cerrado/${seguimiento.id_Servicio}`)
+            const { status: stsEstado } = await Api().get(`/cambiar_estado_servicio_cerrado/${data.id_Servicio}`)
             if (stsEstado === 200) {
-                const { status: sts } = await Api().post('/seguimientoservicio', seguimiento)
+                const { status: sts } = await Api().post('/seguimientoservicio', data)
                 if (sts === 200) {
-                    const { status: sts } = await Api().post('/encuesta_servicio', checkList)
-                    if (sts === 200) {
-                        return true
-                    }
+                    return true
                 }
             }
         }

@@ -83,6 +83,9 @@ export default {
     getters: {
         getDispositivos:state=>{
             return state.dispositivos
+        },
+        getDispositivo:state => (id) => {
+            return state.dispositivos.find(item => item.id_Dispositivo === id)
         }
     }
 }

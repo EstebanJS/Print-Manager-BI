@@ -4,9 +4,8 @@
       <SearchServicioVue v-on:callback="callBackSearchServicio" />
     </div>
     <div>
-      <FormServicioVue
+      <CardServicioVue
         v-if="InfoServicio"
-        ActionForm="EDIT"
         :DataServiceProps="InfoServicio"
       />
     </div>
@@ -27,14 +26,14 @@
 <script>
 import TableDataVue from "./TableData.vue";
 import FormSeguimientoVue from "./FormSeguimiento.vue";
-import FormServicioVue from "./FormServicio.vue";
 import SearchServicioVue from "./SearchServicio.vue";
 import { mapActions } from "vuex";
 import {formatDate} from '@/lib/until'
+import CardServicioVue from './CardServicio.vue';
 export default {
   components: {
     SearchServicioVue,
-    FormServicioVue,
+    CardServicioVue,
     FormSeguimientoVue,
     TableDataVue,
   },

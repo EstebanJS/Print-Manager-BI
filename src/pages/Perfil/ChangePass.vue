@@ -7,6 +7,7 @@
           type="password"
           class="form-control"
           id="oldPass"
+          v-model="ChangePass.Pass_Old"
           aria-describedby="emailHelp"
           placeholder="Ingrese su contraseña anterior"
           required
@@ -18,6 +19,7 @@
           type="password"
           class="form-control"
           id="newPass"
+          v-model="ChangePass.Pass_New"
           aria-describedby="emailHelp"
           placeholder="Ingrese su contraseña anterior"
           required
@@ -29,6 +31,7 @@
           type="password"
           class="form-control"
           id="repetPass"
+          v-model="repetPass"
           aria-describedby="emailHelp"
           placeholder="Repita nueva contraseña"
           required
@@ -42,7 +45,78 @@
 </template>
 
 <script>
-export default {};
+import { evalObjetForm } from "@/lib/validation.js";
+import { sha256 } from "@/lib/bcrypt.js";
+import { mapActions } from "vuex";
+export default {
+  props: {
+    DataUser: {
+      type: Object,
+      required: true,
+    },
+  },
+  data: () => ({
+    ChangePass: {},
+    ClearChangePass: {
+      id_Usuario: "",
+      Pass_Old: "",
+      Pass_New: "",
+    },
+    repetPass: "",
+  }),
+  methods: {
+    ...mapActions("users", ["actChangePass"]),
+    async Action() {
+      if (!evalObjetForm(this.repetPass)) {
+        this.$notify({
+          message: "Campos vacios o concaracteres invalidos ($%&|<>/-)",
+          icon: "ti-alert",
+          horizontalAlign: "right",
+          verticalAlign: "bottom",
+          type: "warning",
+        });
+      } else {
+        if (this.repetPass === this.ChangePass.Pass_New) {
+          this.ChangePass.Pass_Old = sha256(this.ChangePass.Pass_Old);
+          this.ChangePass.Pass_New = sha256(this.ChangePass.Pass_New);
+          if (await this.actChangePass(this.ChangePass)) {
+            this.$notify({
+              message: `Se ha cambiado la contraseña para el usuario ${this.DataUser.nombre}`,
+              icon: "ti-check",
+              horizontalAlign: "right",
+              verticalAlign: "bottom",
+              type: "success",
+            });
+          } else {
+            this.$notify({
+              message: "La contraseña no pudo actualizarse",
+              icon: "ti-alert",
+              horizontalAlign: "right",
+              verticalAlign: "bottom",
+              type: "warning",
+            });
+          }
+          this.repetPass = "";
+          this.ChangePass = { ...this.ClearChangePass };
+          this.ChangePass.id_Usuario = this.DataUser.id_Usuario;
+        } else {
+          this.$notify({
+            message: "Las contraseñas no coinciden",
+            icon: "ti-alert",
+            horizontalAlign: "right",
+            verticalAlign: "bottom",
+            type: "warning",
+          });
+        }
+      }
+    },
+  },
+  created() {
+    if (this.DataUser) {
+      this.ChangePass.id_Usuario = this.DataUser.id_Usuario;
+    }
+  },
+};
 </script>
 
 <style>

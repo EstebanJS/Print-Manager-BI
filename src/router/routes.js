@@ -30,6 +30,7 @@ import AddSeguimiento from '@/pages/Servicios/AddSeguimiento.vue'
 import CloseServicio from '@/pages/Servicios/CloseServicio.vue'
 import LoginPage from '@/pages/Login/LoginPage.vue'
 import Perfil from '@/pages/Perfil/Perfil.vue'
+import Encuesta from '@/pages/Encuesta/Encuesta.vue'
 
 const routes = [
   {
@@ -141,6 +142,11 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginPage
+  },
+  {
+    path: "/encuesta/:id",
+    name: "encuesta",
+    component: Encuesta
   },
   { path: "*", component: NotFound }
 ];

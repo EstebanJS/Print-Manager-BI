@@ -15,25 +15,21 @@
           </div>
         </div>
       </div>
-      <div class="text-center" v-if="actionForm === 'ADD'">
+      <div class="text-center">
         <p-button type="info" round @click.native.prevent="EventButton">
-          Agregar Seguimiento
+          {{
+            actionForm === "ADD" ? "Agregar Seguimiento" : "Finalizar Servicio"
+          }}
         </p-button>
       </div>
       <div class="clearfix"></div>
     </form>
-    <FormCheckListVue
-      v-if="actionForm === 'CLOSE'"
-      :SeguimientoProps="seguimiento"
-      v-on:callback="callBackClean"
-    />
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import { evalObjetForm } from "@/lib/validation.js";
-import FormCheckListVue from "./FormCheckList.vue";
 
 export default {
   props: {
@@ -46,9 +42,6 @@ export default {
       type: Number,
       require: true,
     },
-  },
-  components: {
-    FormCheckListVue,
   },
   data: () => ({
     seguimiento: {
@@ -66,7 +59,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions("servicios", ["actCreateNewSeguimiento"]),
+    ...mapActions("servicios", [
+      "actCreateNewSeguimiento",
+      "actFinalizarServicio",
+    ]),
     async EventButton() {
       if (!evalObjetForm(this.seguimiento)) {
         this.$notify({
@@ -77,11 +73,23 @@ export default {
           type: "warning",
         });
       } else {
-        if (await this.actCreateNewSeguimiento(this.seguimiento)) {
-          this.successMessage();
-        } else {
-          this.errorMessage;
+        switch (this.actionForm) {
+          case "ADD":
+            if (await this.actCreateNewSeguimiento(this.seguimiento)) {
+              this.successMessage();
+            } else {
+              this.errorMessage;
+            }
+            break;
+          case "CLOSE":
+            if (await this.actFinalizarServicio(this.seguimiento)) {
+              this.successMessage();
+            } else {
+              this.errorMessage;
+            }
+            break;
         }
+
         this.seguimiento = {};
         this.$emit("callback");
       }

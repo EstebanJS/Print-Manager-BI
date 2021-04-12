@@ -50,13 +50,12 @@ export default {
             }
             return false
         },
-        async actUsersForRoll(context, id_rol) {
-            const { status, data } = await Api().get(`/usuario_x_rol/${id_rol}`)
+        async actUsersForRoll(context, data) {
+            const { status, data:dataRol } = await Api().post(`/usuario_x_rol`,data)
             if (status === 200) {
-                context.commit('mtdUsersForRoll', data)
-                return true
+                return dataRol
             }
-            return false
+            return []
         },
         async actLogin(context, data) {
 
@@ -87,6 +86,13 @@ export default {
                 return false
             }
             return true
+        },
+        async actChangePass(_,data){
+            const {status,data:rest} = await Api().post('/cambiar_password',data)
+            if (status === 200 && Array.isArray(rest) && rest.length > 0) {
+                return true
+            }
+            return false
         }
 
     },

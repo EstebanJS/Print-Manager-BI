@@ -3,17 +3,6 @@
     <div class="row">
       <div class="col-md-12">
         <fg-input
-          type="text"
-          label="Nombre de la empresa"
-          placeholder="Ingresa el nombre de la empresa"
-          v-model="empresa.nombre_Empresa"
-        >
-        </fg-input>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <fg-input
           v-if="ActionForm === 'ADD'"
           type="text"
           label="Número NIT o Cédula"
@@ -23,7 +12,35 @@
         </fg-input>
       </div>
     </div>
-
+    <div class="row">
+      <div class="col-md-4">
+        <fg-input
+          type="text"
+          label="Nombre de la empresa"
+          placeholder="Ingresa el nombre de la empresa"
+          v-model="empresa.nombre_Empresa"
+        >
+        </fg-input>
+      </div>
+      <div class="col-md-4">
+        <fg-input
+          type="text"
+          label="Correo de la empresa"
+          placeholder="Ingresa el correo de la empresa"
+          v-model="empresa.correo_Empresa"
+        >
+        </fg-input>
+      </div>
+      <div class="col-md-4">
+        <fg-input
+          type="text"
+          label="Telefono de la empresa"
+          placeholder="Ingresa el telefono de la empresa"
+          v-model="empresa.celular_Empresa"
+        >
+        </fg-input>
+      </div>
+    </div>
     <div class="text-center">
       <p-button type="info" round @click.native.prevent="EventButton">
         {{ ActionForm === "ADD" ? "Agregar Empresa" : "Actualizar Empresa" }}
@@ -55,6 +72,8 @@ export default {
     clearEmpresa: {
       nombre_Empresa: "",
       nit_Empresa: "",
+      correo_Empresa:"",
+      celular_Empresa:""
     },
   }),
   watch: {
