@@ -13,6 +13,7 @@
           :key="section.name"
           v-if="getValidSection(section.permisos)"
           class="nav-item resposive-menu"
+          :class="url_active === section.path ? 'active' : ''"
           :title="section.name"
           title-classes="nav-link"
           :icon="section.icon"
@@ -41,6 +42,7 @@
           :key="section.name"
           v-if="getValidSection(section.permisos)"
           class="nav-item"
+          :class="url_active === section.path ? 'active' : ''"
           :title="section.name"
           title-classes="nav-link"
           :icon="section.icon"
@@ -107,6 +109,7 @@ export default {
       {
         name: "Dispostivios",
         icon: "ti-printer",
+        path: "devices",
         permisos: [
           {
             id: 9,
@@ -125,6 +128,7 @@ export default {
       {
         name: "Modelo dispositivo",
         icon: "ti-harddrives",
+        path: "model_devices",
         permisos: [
           {
             id: 19,
@@ -143,6 +147,7 @@ export default {
       {
         name: "Servicios",
         icon: "ti-ticket",
+        path: "servicios",
         permisos: [
           {
             id: 15,
@@ -167,6 +172,7 @@ export default {
       {
         name: "Usuarios",
         icon: "ti-user",
+        path: "users",
         permisos: [
           {
             id: 1,
@@ -185,6 +191,7 @@ export default {
       {
         name: "Empresas",
         icon: "ti-briefcase",
+        path: "empresas",
         permisos: [
           {
             id: 22,
@@ -203,6 +210,7 @@ export default {
       {
         name: "Reportes",
         icon: "ti-write",
+        path: "reportes",
         permisos: [
           {
             id: 26,
@@ -219,7 +227,13 @@ export default {
         ],
       },
     ],
+    url_active: "",
   }),
+  watch: {
+    $route(val) {
+      this.url_active = val.path.split("/")[1];
+    },
+  },
   computed: {
     ...mapGetters("users", ["getValidPermises", "getValidSection"]),
   },
@@ -251,6 +265,8 @@ export default {
       }
     },
   },
-  created() {},
+  created() {
+    this.url_active = this.$router.currentRoute.path.split("/")[1];
+  },
 };
 </script>
