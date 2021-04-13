@@ -200,11 +200,28 @@ export default {
           },
         ],
       },
+      {
+        name: "Reportes",
+        icon: "ti-write",
+        permisos: [
+          {
+            id: 26,
+            name: "Dispositivos",
+            path: "#/reportes/dispositivos",
+            icon: "ti-printer",
+          },
+          {
+            id: 25,
+            name: "Usuarios",
+            path: "#/reportes/usuarios",
+            icon: "ti-user",
+          },
+        ],
+      },
     ],
   }),
   computed: {
     ...mapGetters("users", ["getValidPermises", "getValidSection"]),
-
   },
   methods: {
     ...mapActions("users", ["actLogout"]),

@@ -31,6 +31,8 @@ import CloseServicio from '@/pages/Servicios/CloseServicio.vue'
 import LoginPage from '@/pages/Login/LoginPage.vue'
 import Perfil from '@/pages/Perfil/Perfil.vue'
 import Encuesta from '@/pages/Encuesta/Encuesta.vue'
+import ReporteDispositivos from '@/pages/Reportes/ReporteDispositivos.vue'
+import ReporteUsuarios from '@/pages/Reportes/ReporteUsuarios.vue'
 
 const routes = [
   {
@@ -107,9 +109,19 @@ const routes = [
         component: AddNewEmpresa
       },
       {
-        path:"perfil",
-        name:"Perfil",
-        component:Perfil
+        path: "reportes/dispositivos",
+        name: "Reporte dispositivos",
+        component: ReporteDispositivos
+      },
+      {
+        path: "reportes/usuarios",
+        name: "Reporte usuarios",
+        component: ReporteUsuarios
+      },
+      {
+        path: "perfil",
+        name: "Perfil",
+        component: Perfil
       },
       {
         path: "notifications",

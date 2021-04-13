@@ -3,7 +3,8 @@ export default {
     namespaced: true,
     state: () => ({
         sesion: {},
-        usersForRoll: []
+        usersForRoll: [],
+        ReporteUsuarios: []
     }),
     mutations: {
         mtdUsersForRoll(state, data) {
@@ -11,6 +12,9 @@ export default {
         },
         mtaSetDataUserSesion(state, data) {
             state.sesion = data
+        },
+        mtaSetReporteUsuarios(state, data) {
+            state.ReporteUsuarios = data
         }
     },
     actions: {
@@ -51,7 +55,7 @@ export default {
             return false
         },
         async actUsersForRoll(context, data) {
-            const { status, data:dataRol } = await Api().post(`/usuario_x_rol`,data)
+            const { status, data: dataRol } = await Api().post(`/usuario_x_rol`, data)
             if (status === 200) {
                 return dataRol
             }
@@ -87,9 +91,17 @@ export default {
             }
             return true
         },
-        async actChangePass(_,data){
-            const {status,data:rest} = await Api().post('/cambiar_password',data)
+        async actChangePass(_, data) {
+            const { status, data: rest } = await Api().post('/cambiar_password', data)
             if (status === 200 && Array.isArray(rest) && rest.length > 0) {
+                return true
+            }
+            return false
+        },
+        async actReporte(context, data) {
+            const { status, data: rest } = await Api().post("/listar_usuarios", data)
+            if (status === 200) {
+                context.commit("mtaSetReporteUsuarios", rest)
                 return true
             }
             return false
@@ -122,6 +134,9 @@ export default {
         },
         getDataUser: state => {
             return state.sesion.UserData
+        },
+        getReporteUsuarios: state => {
+            return state.ReporteUsuarios
         }
     }
 }

@@ -12,7 +12,7 @@
               name="inlineRadioOptionsEquipo"
               :id="`inlineRadioEquipo${i}`"
               :value="i"
-              v-model="checkList.Satisfaccion_Servicio_Equipo"
+              v-model="encuesta.Satisfaccion_Servicio_Equipo"
             />
             <label class="form-check-label" :for="`inlineRadioEquipo${i}`">{{
               i
@@ -33,7 +33,7 @@
               name="inlineRadioOptionsCliente"
               :id="`inlineRadioCliente${i}`"
               :value="i"
-              v-model="checkList.Satisfaccion_Trato_Cliente"
+              v-model="encuesta.Satisfaccion_Trato_Cliente"
             />
             <label class="form-check-label" :for="`inlineRadioCliente${i}`">{{
               i
@@ -54,7 +54,7 @@
               name="inlineRadioOptionsPersonal"
               :id="`inlineRadioPersonal${i}`"
               :value="i"
-              v-model="checkList.Presentacion_Personal_Tecnico"
+              v-model="encuesta.Presentacion_Personal_Tecnico"
             />
             <label class="form-check-label" :for="`inlineRadioPersonal${i}`">{{
               i
@@ -73,25 +73,32 @@
 </template>
 
 <script>
-import { evalObjetForm } from "@/lib/validation.js";
+import { mapActions } from "vuex";
 export default {
-  props: {
-    
-  },
+  props: {},
   data: () => ({
-    checkList: {
-      id_Encuesta_Servicio: 0,
+    encuesta: {
       Satisfaccion_Servicio_Equipo: 5,
       Satisfaccion_Trato_Cliente: 5,
       Presentacion_Personal_Tecnico: 5,
       Fecha_Encuesta: "2020-03-29",
+      URL_Encuesta:
+        "133775cb7bb469669d1f8766dc4a36ad5ea6871dfd498755b524ed6d4892b62e",
     },
   }),
   methods: {
-    EventButton() {},
+    ...mapActions(["actSendEncuesta"]),
+    async EventButton() {
+      if (await this.actSendEncuesta(this.encuesta)) {
+        this.successMessage();
+        this.$router.push('login')
+      } else {
+        this.errorMessage();
+      }
+    },
     successMessage() {
       this.$notify({
-        message: `Proceso de creacion de seguimiento exitoso`,
+        message: `Gracias por sus respuestas`,
         icon: "ti-check",
         horizontalAlign: "right",
         verticalAlign: "bottom",
@@ -100,13 +107,16 @@ export default {
     },
     errorMessage() {
       this.$notify({
-        message: `Proceso de creacion de seguimiento fallo`,
+        message: `Error al realizar la encuesta`,
         icon: "ti-na",
         horizontalAlign: "right",
         verticalAlign: "bottom",
         type: "danger",
       });
     },
+  },
+  created() {
+    this.encuesta.URL_Encuesta = this.$route.params.id;
   },
 };
 </script>

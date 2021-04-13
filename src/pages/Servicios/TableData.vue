@@ -11,7 +11,12 @@
       </thead>
       <tbody>
         <tr v-for="(row, index) in data" :key="index">
-          <td v-for="(item, i) in row" :key="i">{{ item }}</td>
+          <td v-for="(item, i) in row" :key="i">
+            <span v-if="typeof item === 'boolean'">{{
+              item ? "Si" : "No"
+            }}</span>
+            <span v-else>{{ item }}</span>
+          </td>
         </tr>
       </tbody>
     </table>

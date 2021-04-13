@@ -166,6 +166,13 @@ export default new Vuex.Store({
                 return true
             }
             return false
+        },
+        async actSendEncuesta(_, data) {
+            const { status, data: rest } = await Api().post("/encuesta_servicio", data)
+            if (status === 200 && Array.isArray(rest) && rest.length >0 && rest[0] !== 0) {
+                return true
+            }
+            return false
         }
     },
     getters: {

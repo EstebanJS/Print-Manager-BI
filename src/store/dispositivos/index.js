@@ -3,12 +3,16 @@ import Api from '../../Services/RestApi'
 export default {
     namespaced: true,
     state: () => ({
-        dispositivos:[]
+        dispositivos:[],
+        ReporteDispositivos:[]
     }),
     mutations: {
         mtaSetDispositivos(state,data){
             state.dispositivos = data
-        }   
+        },
+        mtaSetReporteDispositivos(state,data){
+            state.ReporteDispositivos = data
+        }
     },
     actions: {
         async actCreateNewDevice(context, data) {
@@ -78,6 +82,14 @@ export default {
                 return true
             }
             return false
+        },
+        async actReporte(context,data){
+            const {status,data:rest} = await Api().post("/listar_dispositivos",data)
+            if (status === 200) {
+                context.commit("mtaSetReporteDispositivos",rest)
+                return true
+            }
+            return false
         }
     },
     getters: {
@@ -86,6 +98,9 @@ export default {
         },
         getDispositivo:state => (id) => {
             return state.dispositivos.find(item => item.id_Dispositivo === id)
+        },
+        getReporteDispostivos:state=>{
+            return state.ReporteDispositivos
         }
     }
 }
