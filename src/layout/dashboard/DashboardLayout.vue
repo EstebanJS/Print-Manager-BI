@@ -135,7 +135,7 @@ export default {
           {
             id: 21,
             name: "Editar",
-            path: "#/devices/edit",
+            path: "#/model_devices/edit",
             icon: "ti-pencil",
           },
         ],
