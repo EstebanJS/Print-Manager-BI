@@ -1,7 +1,7 @@
 <template>
   <card class="card" title="Cambio de contraseña">
     <form v-on:submit.prevent="Action">
-      <div class="form-group">
+      <div v-if="ActionForm === 'PERFIL'" class="form-group">
         <label for="oldPass">Contraseña anterior</label>
         <input
           type="password"
@@ -50,9 +50,13 @@ import { sha256 } from "@/lib/bcrypt.js";
 import { mapActions } from "vuex";
 export default {
   props: {
+    ActionForm: {
+      type: String,
+      required: true,
+    },
     DataUser: {
       type: Object,
-      required: true,
+      required: false,
     },
   },
   data: () => ({
@@ -79,23 +83,31 @@ export default {
         if (this.repetPass === this.ChangePass.Pass_New) {
           this.ChangePass.Pass_Old = sha256(this.ChangePass.Pass_Old);
           this.ChangePass.Pass_New = sha256(this.ChangePass.Pass_New);
-          if (await this.actChangePass(this.ChangePass)) {
-            this.$notify({
-              message: `Se ha cambiado la contraseña para el usuario ${this.DataUser.nombre}`,
-              icon: "ti-check",
-              horizontalAlign: "right",
-              verticalAlign: "bottom",
-              type: "success",
-            });
-          } else {
-            this.$notify({
-              message: "La contraseña no pudo actualizarse",
-              icon: "ti-alert",
-              horizontalAlign: "right",
-              verticalAlign: "bottom",
-              type: "warning",
-            });
+          switch (this.ActionForm) {
+            case "PERFIL":
+              if (await this.actChangePass(this.ChangePass)) {
+                this.$notify({
+                  message: `Se ha cambiado la contraseña para el usuario ${this.DataUser.nombre}`,
+                  icon: "ti-check",
+                  horizontalAlign: "right",
+                  verticalAlign: "bottom",
+                  type: "success",
+                });
+              } else {
+                this.$notify({
+                  message: "La contraseña no pudo actualizarse",
+                  icon: "ti-alert",
+                  horizontalAlign: "right",
+                  verticalAlign: "bottom",
+                  type: "warning",
+                });
+              }
+              break;
+
+            case "RESTABLECER":
+              break;
           }
+
           this.repetPass = "";
           this.ChangePass = { ...this.ClearChangePass };
           this.ChangePass.id_Usuario = this.DataUser.id_Usuario;

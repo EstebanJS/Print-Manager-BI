@@ -5,10 +5,8 @@
   >
     <div class="container">
       <div class="row">
-        <div class="col-md-4 login-sec text-center">
-          <h2 class="text-center">Inicio de sesión</h2>
-          <FormLoginVue />
-        </div>
+        <FormLoginVue v-if="isLogin" v-on:Handler="handler" />
+        <FormRecuperarContrasenaVue v-if="!isLogin" v-on:Handler="handler" />
         <div class="col-md-8 banner-sec px-0">
           <div
             id="carouselExampleIndicators"
@@ -42,9 +40,19 @@
 
 <script>
 import FormLoginVue from "./FormLogin.vue";
+import FormRecuperarContrasenaVue from "./FormRecuperarContraseña.vue";
 export default {
   components: {
     FormLoginVue,
+    FormRecuperarContrasenaVue,
+  },
+  data: () => ({
+    isLogin: true,
+  }),
+  methods: {
+    handler() {
+      this.isLogin = !this.isLogin;
+    },
   },
 };
 </script>

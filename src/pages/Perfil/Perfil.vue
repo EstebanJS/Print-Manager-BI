@@ -1,7 +1,7 @@
 <template>
   <div>
     <CardProfileVue :DataUser="getDataUser" />
-    <ChangePassVue :DataUser="getDataUser" />
+    <ChangePassVue :DataUser="getDataUser" ActionForm="PERFIL"/>
   </div>
 </template>
 

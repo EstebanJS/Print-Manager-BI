@@ -3,7 +3,7 @@ import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 // Technical Layout
 
 //Validacion de permisos
-import {ValidatePermissions} from '@/lib/guards.js'
+import { ValidatePermissions } from '@/lib/guards.js'
 
 // GeneralViews
 import NotFound from "@/pages/NotFoundPage.vue";
@@ -30,6 +30,7 @@ import CloseServicio from '@/pages/Servicios/CloseServicio.vue'
 import LoginPage from '@/pages/Login/LoginPage.vue'
 import Perfil from '@/pages/Perfil/Perfil.vue'
 import Encuesta from '@/pages/Encuesta/Encuesta.vue'
+import Restablecer from '@/pages/Restablecer/Restablecer.vue'
 import ReporteDispositivos from '@/pages/Reportes/ReporteDispositivos.vue'
 import ReporteUsuarios from '@/pages/Reportes/ReporteUsuarios.vue'
 import ReporteServicios from '@/pages/Reportes/ReporteServicios.vue'
@@ -53,36 +54,36 @@ const routes = [
         path: "devices/add",
         name: "Agregar Dispositivos",
         component: AddDevices,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(9)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(9)) next()
+          else next({ path: '/' })
         }
       },
       {
         path: "devices/edit",
         name: "Editar Dispositivos",
         component: EditDevices,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(10)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(10)) next()
+          else next({ path: '/' })
         }
       },
       {
         path: "model_devices/add",
         name: "Agregar Modelo Dispositivos",
         component: AddModelDevices,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(19)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(19)) next()
+          else next({ path: '/' })
         }
       },
       {
         path: "model_devices/edit",
         name: "Editar Modelo Dispositivos",
         component: EditModelDevices,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(21)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(21)) next()
+          else next({ path: '/' })
         }
       },
       {
@@ -94,18 +95,18 @@ const routes = [
             path: "edit",
             name: "Editar Usuario",
             component: EditUser,
-            beforeEnter:(to,from,next)=>{
-              if(ValidatePermissions(6)) next()
-              else next({path:'/'})
+            beforeEnter: (to, from, next) => {
+              if (ValidatePermissions(6)) next()
+              else next({ path: '/' })
             }
 
           }, {
             path: "add",
             name: "Agregar Usuario",
             component: AddNewUser,
-            beforeEnter:(to,from,next)=>{
-              if(ValidatePermissions(1)) next()
-              else next({path:'/'})
+            beforeEnter: (to, from, next) => {
+              if (ValidatePermissions(1)) next()
+              else next({ path: '/' })
             }
           }
         ]
@@ -114,72 +115,72 @@ const routes = [
         path: "servicios/add",
         name: "Agregar Servicio",
         component: AddServicio,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(15)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(15)) next()
+          else next({ path: '/' })
         }
       },
       {
         path: "servicios/add_seguimiento",
         name: "Agregar Seguimiento",
         component: AddSeguimiento,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(16)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(16)) next()
+          else next({ path: '/' })
         }
       },
       {
         path: "servicios/close",
         name: "Finalizar servicio",
         component: CloseServicio,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(17)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(17)) next()
+          else next({ path: '/' })
         }
       },
       {
         path: "empresas/edit",
         name: "Editar Empresa",
         component: EditEmpresa,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(23)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(23)) next()
+          else next({ path: '/' })
         }
       },
       {
         path: "empresas/add",
         name: "Agregar Empresa",
         component: AddNewEmpresa,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(22)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(22)) next()
+          else next({ path: '/' })
         }
       },
       {
         path: "reportes/dispositivos",
         name: "Reporte dispositivos",
         component: ReporteDispositivos,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(26)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(26)) next()
+          else next({ path: '/' })
         }
       },
       {
         path: "reportes/usuarios",
         name: "Reporte usuarios",
         component: ReporteUsuarios,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(25)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(25)) next()
+          else next({ path: '/' })
         }
       },
       {
         path: "reportes/servicios",
         name: "Reporte servicios",
         component: ReporteServicios,
-        beforeEnter:(to,from,next)=>{
-          if(ValidatePermissions(27)) next()
-          else next({path:'/'})
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(27)) next()
+          else next({ path: '/' })
         }
       },
       {
@@ -223,6 +224,11 @@ const routes = [
     path: "/encuesta/:id",
     name: "encuesta",
     component: Encuesta
+  },
+  {
+    path: "/restablecer/:id",
+    name: "restablecer",
+    component: Restablecer
   },
   { path: "*", component: NotFound }
 ];
