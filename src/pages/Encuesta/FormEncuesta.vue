@@ -91,9 +91,10 @@ export default {
     async EventButton() {
       if (await this.actSendEncuesta(this.encuesta)) {
         this.successMessage();
-        this.$router.push('login')
+        this.$router.push({path:'/login'})
       } else {
         this.errorMessage();
+        this.$router.push({path:'/login'})
       }
     },
     successMessage() {

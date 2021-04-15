@@ -9,4 +9,12 @@ const router = new VueRouter({
   linkActiveClass: "active"
 });
 
+router.beforeEach((to, from, next) => {
+  let isAuthenticated = localStorage.getItem("sesion") 
+  if (to.name === "encuesta") next()
+  else if ( to.name === 'login' && isAuthenticated) next({ path: '/' })
+  else if ( to.name !== 'login' && !isAuthenticated) next({ name: 'login' })
+  else next()
+})
+
 export default router;

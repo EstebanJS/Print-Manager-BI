@@ -2,9 +2,8 @@
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 // Technical Layout
 
-// Client Layout
-
-// Manager Layout
+//Validacion de permisos
+import {ValidatePermissions} from '@/lib/guards.js'
 
 // GeneralViews
 import NotFound from "@/pages/NotFoundPage.vue";
@@ -33,6 +32,7 @@ import Perfil from '@/pages/Perfil/Perfil.vue'
 import Encuesta from '@/pages/Encuesta/Encuesta.vue'
 import ReporteDispositivos from '@/pages/Reportes/ReporteDispositivos.vue'
 import ReporteUsuarios from '@/pages/Reportes/ReporteUsuarios.vue'
+import ReporteServicios from '@/pages/Reportes/ReporteServicios.vue'
 
 const routes = [
   {
@@ -40,31 +40,50 @@ const routes = [
     component: DashboardLayout,
     redirect: "/dashboard",
     children: [
-
       {
         path: "dashboard",
         name: "dashboard",
-        component: Dashboard
+        component: Dashboard,
+        // beforeEnter:(to,from,next)=>{
+        //   if(ValidatePermissions(24)) next()
+        //   else next({path:'/'})
+        // }
       },
       {
         path: "devices/add",
         name: "Agregar Dispositivos",
-        component: AddDevices
+        component: AddDevices,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(9)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "devices/edit",
         name: "Editar Dispositivos",
-        component: EditDevices
+        component: EditDevices,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(10)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "model_devices/add",
         name: "Agregar Modelo Dispositivos",
-        component: AddModelDevices
+        component: AddModelDevices,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(19)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "model_devices/edit",
         name: "Editar Modelo Dispositivos",
-        component: EditModelDevices
+        component: EditModelDevices,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(21)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "users",
@@ -74,80 +93,125 @@ const routes = [
           {
             path: "edit",
             name: "Editar Usuario",
-            component: EditUser
+            component: EditUser,
+            beforeEnter:(to,from,next)=>{
+              if(ValidatePermissions(6)) next()
+              else next({path:'/'})
+            }
 
           }, {
             path: "add",
             name: "Agregar Usuario",
-            component: AddNewUser
+            component: AddNewUser,
+            beforeEnter:(to,from,next)=>{
+              if(ValidatePermissions(1)) next()
+              else next({path:'/'})
+            }
           }
         ]
       },
       {
         path: "servicios/add",
         name: "Agregar Servicio",
-        component: AddServicio
+        component: AddServicio,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(15)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "servicios/add_seguimiento",
         name: "Agregar Seguimiento",
-        component: AddSeguimiento
+        component: AddSeguimiento,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(16)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "servicios/close",
         name: "Finalizar servicio",
-        component: CloseServicio
+        component: CloseServicio,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(17)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "empresas/edit",
         name: "Editar Empresa",
-        component: EditEmpresa
+        component: EditEmpresa,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(23)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "empresas/add",
         name: "Agregar Empresa",
-        component: AddNewEmpresa
+        component: AddNewEmpresa,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(22)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "reportes/dispositivos",
         name: "Reporte dispositivos",
-        component: ReporteDispositivos
+        component: ReporteDispositivos,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(26)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "reportes/usuarios",
         name: "Reporte usuarios",
-        component: ReporteUsuarios
+        component: ReporteUsuarios,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(25)) next()
+          else next({path:'/'})
+        }
+      },
+      {
+        path: "reportes/servicios",
+        name: "Reporte servicios",
+        component: ReporteServicios,
+        beforeEnter:(to,from,next)=>{
+          if(ValidatePermissions(27)) next()
+          else next({path:'/'})
+        }
       },
       {
         path: "perfil",
         name: "Perfil",
-        component: Perfil
+        component: Perfil,
       },
-      {
-        path: "notifications",
-        name: "notifications",
-        component: Notifications
-      },
-      {
-        path: "icons",
-        name: "icons",
-        component: Icons
-      },
-      {
-        path: "maps",
-        name: "maps",
-        component: Maps
-      },
-      {
-        path: "typography",
-        name: "typography",
-        component: Typography
-      },
-      {
-        path: "table-list",
-        name: "table-list",
-        component: TableList
-      }
+      // {
+      //   path: "notifications",
+      //   name: "notifications",
+      //   component: Notifications
+      // },
+      // {
+      //   path: "icons",
+      //   name: "icons",
+      //   component: Icons
+      // },
+      // {
+      //   path: "maps",
+      //   name: "maps",
+      //   component: Maps
+      // },
+      // {
+      //   path: "typography",
+      //   name: "typography",
+      //   component: Typography
+      // },
+      // {
+      //   path: "table-list",
+      //   name: "table-list",
+      //   component: TableList
+      // }
     ]
   },
   {
@@ -162,6 +226,8 @@ const routes = [
   },
   { path: "*", component: NotFound }
 ];
+
+
 
 /**
  * Asynchronously load view (Webpack Lazy loading compatible)

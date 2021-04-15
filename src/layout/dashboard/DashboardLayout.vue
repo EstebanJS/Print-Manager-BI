@@ -224,6 +224,12 @@ export default {
             path: "#/reportes/usuarios",
             icon: "ti-user",
           },
+          {
+            id: 27,
+            name: "Servicios",
+            path: "#/reportes/servicios",
+            icon: "ti-ticket",
+          },
         ],
       },
     ],

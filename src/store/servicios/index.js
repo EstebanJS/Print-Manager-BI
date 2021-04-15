@@ -3,8 +3,12 @@ import Api from '../../Services/RestApi'
 export default {
     namespaced: true,
     state: () => ({
+        ReporteServicios:[]
     }),
     mutations: {
+        mtaSetReporteServicos(state,data){
+            return state.ReporteServicios = data
+        }
     },
     actions: {
         async actCreateNewServices(_, data) {
@@ -49,7 +53,19 @@ export default {
                     return true
                 }
             }
+        },
+        async actReporte(context,data){
+            const {status,data:rest} = await Api().post("/listar_servicios",data)
+            if (status ===200) {
+                context.commit("mtaSetReporteServicos",rest)
+                return true
+            }
+            return false
         }
     },
-    getters: {}
+    getters: {
+        getReporteServicios:state =>{
+            return state.ReporteServicios
+        }
+    }
 }
