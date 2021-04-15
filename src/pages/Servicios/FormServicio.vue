@@ -27,7 +27,7 @@
             :key="dispositivo.id_Dispositivo"
             :value="dispositivo.id_Dispositivo"
           >
-            {{ dispositivo.serial }}
+            {{ dispositivo.serie }}
           </option>
         </select>
       </div>
@@ -145,7 +145,7 @@ export default {
       Fecha_Cierre: "2020-04-05",
       id_Estado_Servicio: 1,
       id_Falla: "",
-      id_Usuario: 1
+      id_Usuario: 1,
     },
     id_Dispositivo: "",
     Tecnicos: [],
@@ -157,6 +157,7 @@ export default {
       "getTipoServicioSelect",
       "getEstadoServicioSelect",
     ]),
+    ...mapGetters("users", ["getDataUser"]),
   },
   watch: {
     DataServiceProps(newValue) {
@@ -197,7 +198,7 @@ export default {
           type: "warning",
         });
       } else {
-        this.servicio.URL_Encuesta = sha256(JSON.stringify(this.servicio))
+        this.servicio.URL_Encuesta = sha256(JSON.stringify(this.servicio));
         const rest = await this.actCreateNewServices(this.servicio);
         if (rest) {
           this.successMessage(rest);
@@ -247,7 +248,12 @@ export default {
       this.servicio = { ...this.CleanServicio };
     }
     if (this.getDispositivos.length === 0) {
-      await this.actGetDispositivos();
+      await this.actGetDispositivos({
+        id_Rol: this.getDataUser.id_Rol,
+        id_Empresa: this.getDataUser.id_Empresa,
+        Columna_Filtro: "estado",
+        Valor_Filtro: "Activo",
+      });
     }
     if (this.getTipoFallaSelect.length === 0) {
       await this.actLoadTipoFallaSelect();

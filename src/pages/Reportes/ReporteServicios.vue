@@ -8,7 +8,7 @@
           <option value="ciudad">Ciudad</option>
           <option value="estado_Servicio">Estado</option>
           <option value="empresa">Empresa</option>
-          <option value="modelo">Modelo</option>
+          <option value="tipo_Servicio">Tipo Servicio</option>
         </select>
       </div>
       <div class="col-md-6">
@@ -115,9 +115,9 @@ export default {
             ...new Set(this.getReporteServicios.map((item) => item.empresa)),
           ];
           break;
-        case "modelo":
+        case "tipo_Servicio":
           this.SelectValue = [
-            ...new Set(this.getReporteServicios.map((item) => item.modelo)),
+            ...new Set(this.getReporteServicios.map((item) => item.tipo_Servicio)),
           ];
           break;
       }

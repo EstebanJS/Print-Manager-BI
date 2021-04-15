@@ -75,10 +75,10 @@ export default {
             }
             return false
         },
-        async actGetDispositivos(context){
-            const {status,data} = await Api().get("/dispositivo")
+        async actGetDispositivos(context,data){
+            const {status,data:resp} = await Api().post("/listar_dispositivos",data)
             if(status === 200){
-                context.commit('mtaSetDispositivos',data)
+                context.commit('mtaSetDispositivos',resp)
                 return true
             }
             return false
@@ -86,7 +86,12 @@ export default {
         async actReporte(context,data){
             const {status,data:rest} = await Api().post("/listar_dispositivos",data)
             if (status === 200) {
-                context.commit("mtaSetReporteDispositivos",rest)
+                let fix = rest.map(item =>{
+                    delete item.id_Dispositivo
+                    delete item.id_Ciudad
+                    return item
+                })
+                context.commit("mtaSetReporteDispositivos",fix)
                 return true
             }
             return false

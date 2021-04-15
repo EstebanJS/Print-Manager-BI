@@ -1,12 +1,13 @@
 import Api from '../../Services/RestApi'
+import { formatDate } from '../../lib/until'
 
 export default {
     namespaced: true,
     state: () => ({
-        ReporteServicios:[]
+        ReporteServicios: []
     }),
     mutations: {
-        mtaSetReporteServicos(state,data){
+        mtaSetReporteServicos(state, data) {
             return state.ReporteServicios = data
         }
     },
@@ -54,17 +55,22 @@ export default {
                 }
             }
         },
-        async actReporte(context,data){
-            const {status,data:rest} = await Api().post("/listar_servicios",data)
-            if (status ===200) {
-                context.commit("mtaSetReporteServicos",rest)
+        async actReporte(context, data) {
+            const { status, data: rest } = await Api().post("/listar_servicios", data)
+            if (status === 200) {
+                let fixdate = rest.map(item => {
+                    item.fecha_Solicitud = formatDate(item.fecha_Solicitud)
+                    item.fecha_Cierre = formatDate(item.fecha_Cierre)
+                    return item
+                })
+                context.commit("mtaSetReporteServicos", fixdate)
                 return true
             }
             return false
         }
     },
     getters: {
-        getReporteServicios:state =>{
+        getReporteServicios: state => {
             return state.ReporteServicios
         }
     }
