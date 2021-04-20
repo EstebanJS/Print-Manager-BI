@@ -1,13 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <iframe
-        width="1140"
-        height="541.25"
-        src="https://app.powerbi.com/reportEmbed?reportId=c1883852-bf89-4b5c-bb01-1eff419d1ad8&autoAuth=true&ctid=07da67a0-1f43-4e8c-977f-5f88b6470ee6&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWNlbnRyYWwtdXMtcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D"
-        frameborder="0"
-        allowFullScreen="true"
-      ></iframe>
+      <iframe height="373.5" style="width:100%;" src="https://app.powerbi.com/view?r=eyJrIjoiYzVkY2Y4MWMtZWNjMi00YjQwLWFlOWEtMTcyMWVkOTIxYzU3IiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
     </div>
 
     <!--Stats cards-->
