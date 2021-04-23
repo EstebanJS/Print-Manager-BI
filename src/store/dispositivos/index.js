@@ -83,7 +83,7 @@ export default {
             }
             return false
         },
-        async actReporte(context,data){
+        async actReporteDispositivo(context,data){
             const {status,data:rest} = await Api().post("/listar_dispositivos",data)
             if (status === 200) {
                 let fix = rest.map(item =>{

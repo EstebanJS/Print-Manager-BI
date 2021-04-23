@@ -87,6 +87,7 @@ export default {
             localStorage.removeItem('sesion')
             context.commit('mtaSetDataUserSesion', {})
             if (localStorage.getItem('sesion')) {
+                this.reset()
                 return false
             }
             return true

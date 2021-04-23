@@ -55,7 +55,7 @@ export default {
                 }
             }
         },
-        async actReporte(context, data) {
+        async actReporteServicio(context, data) {
             const { status, data: rest } = await Api().post("/listar_servicios", data)
             if (status === 200) {
                 let fixdate = rest.map(item => {

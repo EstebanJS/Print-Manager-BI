@@ -91,7 +91,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("dispositivos", ["actReporte"]),
+    ...mapActions("dispositivos", ["actReporteDispositivo"]),
     async switchColum(value) {
       switch (value) {
         case "ciudad":
@@ -123,7 +123,7 @@ export default {
       this.request.id_Rol = this.getDataUser.id_Rol;
       this.request.id_Empresa = this.getDataUser.id_Empresa;
       if (this.getReporteDispostivos.length === 0) {
-        await this.actReporte(this.request);
+        await this.actReporteDispositivo(this.request);
       }
       this.body = [...this.getReporteDispostivos];
     }

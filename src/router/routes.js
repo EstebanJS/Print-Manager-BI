@@ -193,11 +193,11 @@ const routes = [
       //   name: "notifications",
       //   component: Notifications
       // },
-      // {
-      //   path: "icons",
-      //   name: "icons",
-      //   component: Icons
-      // },
+      {
+        path: "icons",
+        name: "icons",
+        component: Icons
+      },
       // {
       //   path: "maps",
       //   name: "maps",
