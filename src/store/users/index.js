@@ -106,6 +106,22 @@ export default {
                 return true
             }
             return false
+        },
+        async actSolicitudRestablecerContraseña(_, data) {
+            const { status, data: response } = await Api().post("/validar_correo_resstablecer_pass", data)
+            if (status === 200 && response) return true
+            return response
+        },
+        async actValidarRutaRecuperarContrasena(_, data) {
+            const { status, data: response } = await Api().post("/validar_url", data)
+            if (status === 200 && Array.isArray(response) && response.length > 0) return response[0];
+            return undefined
+
+        },
+        async actRestablecerContrasenaCorreo(_, data) {
+            const { status, data: response } = await Api().post("/reestablecer_pass", data)
+            if (status === 200 && Array.isArray(response) && response.length > 0) return response[0];
+            return undefined
         }
 
     },

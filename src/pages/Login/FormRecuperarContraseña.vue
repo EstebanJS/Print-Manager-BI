@@ -15,7 +15,9 @@
         />
       </div>
       <div>
-        <button type="submit" class="btn btn-info">Restablecer Contraseña</button>
+        <button type="submit" class="btn btn-info">
+          Restablecer Contraseña
+        </button>
       </div>
       <br />
 
@@ -27,15 +29,36 @@
 </template>
 
 <script>
-
-
+import { sha256 } from "@/lib/bcrypt.js";
+import { mapActions } from "vuex";
 export default {
   data: () => ({
-    Correo:""
+    Correo: "",
   }),
   methods: {
-    Restablecer() {
-      alert(this.Correo)
+    ...mapActions("users", ["actSolicitudRestablecerContraseña"]),
+    async Restablecer() {
+      let data = {
+        Correo: this.Correo,
+        URL: sha256(`|${this.Correo}|${new Date()}`),
+      };
+      if (await this.actSolicitudRestablecerContraseña(data)) {
+        this.$notify({
+          message: `Ingrese a su correo para continuar con el proceso`,
+          icon: "ti-check",
+          horizontalAlign: "right",
+          verticalAlign: "bottom",
+          type: "success",
+        });
+      } else {
+        this.$notify({
+          message: `No se pudo realizar el proceso`,
+          icon: "ti-na",
+          horizontalAlign: "right",
+          verticalAlign: "bottom",
+          type: "danger",
+        });
+      }
     },
   },
 };

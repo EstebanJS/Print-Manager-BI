@@ -69,9 +69,9 @@ export default {
     repetPass: "",
   }),
   methods: {
-    ...mapActions("users", ["actChangePass"]),
+    ...mapActions("users", ["actChangePass", "actRestablecerContrasenaCorreo"]),
     async Action() {
-      if (!evalObjetForm(this.repetPass)) {
+      if (!evalObjetForm(this.ChangePass)) {
         this.$notify({
           message: "Campos vacios o concaracteres invalidos ($%&|<>/-)",
           icon: "ti-alert",
@@ -105,6 +105,28 @@ export default {
               break;
 
             case "RESTABLECER":
+              let res = await this.actRestablecerContrasenaCorreo({
+                id_Usuario: this.ChangePass.id_Usuario,
+                Pass_New: this.ChangePass.Pass_New,
+              });
+              if (res) {
+                this.$notify({
+                  message: `Se ha cambiado la contraseña para el usuario ${res.nombre}`,
+                  icon: "ti-check",
+                  horizontalAlign: "right",
+                  verticalAlign: "bottom",
+                  type: "success",
+                });
+                this.$outer.push({ path: "/login" });
+              } else {
+                this.$notify({
+                  message: "La contraseña no pudo actualizarse",
+                  icon: "ti-alert",
+                  horizontalAlign: "right",
+                  verticalAlign: "bottom",
+                  type: "warning",
+                });
+              }
               break;
           }
 
@@ -127,6 +149,8 @@ export default {
     if (this.DataUser) {
       this.ChangePass.id_Usuario = this.DataUser.id_Usuario;
     }
+    if (this.ActionForm === "RESTABLECER")
+      this.ChangePass.Pass_Old = "RESTABLECER";
   },
 };
 </script>
