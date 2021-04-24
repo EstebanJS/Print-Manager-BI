@@ -11,7 +11,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   let isAuthenticated = localStorage.getItem("sesion") 
-  console.log(to.name);
   if (to.name === "encuesta") next()
   else if (to.name === "restablecer") next()
   else if ( to.name === 'login' && isAuthenticated) next({ path: '/' })
