@@ -117,7 +117,7 @@ export default {
                   verticalAlign: "bottom",
                   type: "success",
                 });
-                this.$outer.push({ path: "/login" });
+                this.$router.push({ path: "/login" });
               } else {
                 this.$notify({
                   message: "La contraseña no pudo actualizarse",

@@ -50,6 +50,7 @@ export default {
           verticalAlign: "bottom",
           type: "success",
         });
+        this.$emit('Handler')
       } else {
         this.$notify({
           message: `No se pudo realizar el proceso`,
