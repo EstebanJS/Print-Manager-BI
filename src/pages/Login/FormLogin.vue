@@ -33,7 +33,7 @@
           id="flexCheckDefault"
         />
         <label class="form-check-label" for="flexCheckDefault">
-          Acepto la política de protección de datos. <a href="https://capacitador-ley-1273-2009.000webhostapp.com/Politica%20de%20Datos.pdf" target="_blanck">ver online</a>
+          Acepto la política de protección de datos. <a href="https://print-manager-bi.000webhostapp.com/Pol%C3%ADtica%20de%20Tratamiento%20de%20Datos%20-%20PRINT%20MANAGER%20BI.pdf" target="_blanck">ver online</a>
         </label>
       </div>
       <div>
