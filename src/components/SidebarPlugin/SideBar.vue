@@ -9,7 +9,7 @@
     <!-- -->
     <div class="sidebar-wrapper" id="style-3">
       <div class="logo">
-        <a href="#" class="simple-text">
+        <a href="#/AboutUs" class="simple-text">
             <div class="logo-img">
                 <img src="@/assets/img/LogoNav.png" style="max-width: 40px;" alt="">
             </div>

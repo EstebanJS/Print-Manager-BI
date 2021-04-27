@@ -34,21 +34,27 @@ import Restablecer from '@/pages/Restablecer/Restablecer.vue'
 import ReporteDispositivos from '@/pages/Reportes/ReporteDispositivos.vue'
 import ReporteUsuarios from '@/pages/Reportes/ReporteUsuarios.vue'
 import ReporteServicios from '@/pages/Reportes/ReporteServicios.vue'
+import AboutUs from '@/pages/AboutUs.vue'
 
 const routes = [
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/dashboard",
+    redirect: "/AboutUs",
     children: [
+      {
+        path: "AboutUs",
+        name: "AboutUs",
+        component: AboutUs
+      },
       {
         path: "dashboard",
         name: "dashboard",
         component: Dashboard,
-        // beforeEnter:(to,from,next)=>{
-        //   if(ValidatePermissions(24)) next()
-        //   else next({path:'/'})
-        // }
+        beforeEnter: (to, from, next) => {
+          if (ValidatePermissions(24)) next()
+          else next({ path: '/' })
+        }
       },
       {
         path: "devices/add",

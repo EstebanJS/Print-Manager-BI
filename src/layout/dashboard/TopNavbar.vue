@@ -21,7 +21,7 @@
             title-classes="nav-link"
             icon="ti-settings"
           >
-            <a href="#" class="nav-link">
+            <a href="#/AboutUs" class="nav-link">
               <i class="ti-info"></i>
               <p>Acerca de</p>
             </a>

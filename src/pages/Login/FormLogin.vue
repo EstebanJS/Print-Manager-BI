@@ -63,7 +63,7 @@ export default {
           verticalAlign: "bottom",
           type: "success",
         });
-        this.$router.push("dashboard");
+        this.$router.push("aboutus");
       } else {
         this.$notify({
           message: "Usuario o contraseña invalidos",
