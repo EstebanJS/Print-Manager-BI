@@ -33,11 +33,18 @@
           id="flexCheckDefault"
         />
         <label class="form-check-label" for="flexCheckDefault">
-          Acepto la política de protección de datos. <a href="https://print-manager-bi.000webhostapp.com/Pol%C3%ADtica%20de%20Tratamiento%20de%20Datos%20-%20PRINT%20MANAGER%20BI.pdf" target="_blanck">ver online</a>
+          Acepto la política de protección de datos.<br />
+          <a
+            href="https://print-manager-bi.000webhostapp.com/Pol%C3%ADtica%20de%20Tratamiento%20de%20Datos%20-%20PRINT%20MANAGER%20BI.pdf"
+            target="_blanck"
+            >ver online</a
+          >
         </label>
       </div>
       <div>
-        <button type="submit" :disabled="!Act" class="btn btn-info">Ingresar</button>
+        <button type="submit" :disabled="!Act" class="btn btn-info">
+          Ingresar
+        </button>
       </div>
       <br />
       <button class="btn btn-primary" @click="$emit('Handler')">
@@ -56,13 +63,13 @@ export default {
       Correo: "",
       Pass: "",
     },
-    Act:false,
+    Act: false,
     password: "",
   }),
   watch: {
     password(newvalue) {
       this.dataLogin.Pass = sha256(newvalue);
-    }
+    },
   },
   methods: {
     ...mapActions("users", ["actLogin"]),
