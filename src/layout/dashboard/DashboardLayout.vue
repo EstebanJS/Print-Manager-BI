@@ -31,12 +31,12 @@
         </drop-down>
       </template>
       <mobile-menu>
-        <li class="nav-item">
-          <a href="#" class="nav-link resposive-menu">
-            <i class="ti-panel"></i>
-            <p>Dashboard</p>
-          </a>
-        </li>
+        <sidebar-link
+          to="/dashboard"
+          name="Dashboard"
+          icon="ti-panel"
+          v-if="getValidPermises(24)"
+        />
         <drop-down
           v-for="section in PermisosRoles"
           :key="section.name"
