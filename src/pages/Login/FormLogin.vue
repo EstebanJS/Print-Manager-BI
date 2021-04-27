@@ -25,8 +25,19 @@
           v-model="password"
         />
       </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          v-model="Act"
+          id="flexCheckDefault"
+        />
+        <label class="form-check-label" for="flexCheckDefault">
+          Acepto la política de protección de datos. <a href="https://capacitador-ley-1273-2009.000webhostapp.com/Politica%20de%20Datos.pdf" target="_blanck">ver online</a>
+        </label>
+      </div>
       <div>
-        <button type="submit" class="btn btn-info">Ingresar</button>
+        <button type="submit" :disabled="!Act" class="btn btn-info">Ingresar</button>
       </div>
       <br />
       <button class="btn btn-primary" @click="$emit('Handler')">
@@ -45,12 +56,13 @@ export default {
       Correo: "",
       Pass: "",
     },
+    Act:false,
     password: "",
   }),
   watch: {
     password(newvalue) {
       this.dataLogin.Pass = sha256(newvalue);
-    },
+    }
   },
   methods: {
     ...mapActions("users", ["actLogin"]),
