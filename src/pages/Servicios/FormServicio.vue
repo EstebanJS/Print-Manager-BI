@@ -152,6 +152,7 @@ export default {
   }),
   computed: {
     ...mapGetters("dispositivos", ["getDispositivos", "getDispositivo"]),
+    ...mapGetters("users", ["getDataUser"]),
     ...mapGetters([
       "getTipoFallaSelect",
       "getTipoServicioSelect",
@@ -246,6 +247,9 @@ export default {
       this.servicio = { ...this.DataServiceProps };
     } else {
       this.servicio = { ...this.CleanServicio };
+      if (this.getDataUser) {
+        this.servicio.id_Usuario = this.getDataUser.id_Usuario;
+      }
     }
     if (this.getDispositivos.length === 0) {
       await this.actGetDispositivos({

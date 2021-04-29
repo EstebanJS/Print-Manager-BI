@@ -4,13 +4,15 @@
       <SearchServicioVue v-on:callback="callBackSearchServicio" />
     </div>
     <div>
-      <CardServicioVue
-        v-if="InfoServicio"
-        :DataServiceProps="InfoServicio"
-      />
+      <CardServicioVue v-if="InfoServicio" :DataServiceProps="InfoServicio" />
     </div>
     <div>
-      <TableDataVue v-if="InfoServicio" :TableHeaders="headers" :data="body" title="Seguimiento del servicio"/>
+      <TableDataVue
+        v-if="InfoServicio"
+        :TableHeaders="headers"
+        :data="body"
+        title="Seguimiento del servicio"
+      />
     </div>
     <div>
       <FormSeguimientoVue
@@ -24,12 +26,13 @@
 </template>
 
 <script>
+import NotificationTemplate from '../Notifications/NotificationTemplate';
 import TableDataVue from "./TableData.vue";
 import FormSeguimientoVue from "./FormSeguimiento.vue";
 import SearchServicioVue from "./SearchServicio.vue";
 import { mapActions } from "vuex";
-import {formatDate} from '@/lib/until'
-import CardServicioVue from './CardServicio.vue';
+import { formatDate } from "@/lib/until";
+import CardServicioVue from "./CardServicio.vue";
 export default {
   components: {
     SearchServicioVue,
@@ -39,32 +42,32 @@ export default {
   },
   data: () => ({
     InfoServicio: undefined,
-    headers: ["Actualizado por", "Correo","Estado","Seguimiento","Fecha"],
+    headers: ["Asignado a", "Correo", "Estado", "Seguimiento", "Fecha"],
     body: [],
   }),
   watch: {
     async InfoServicio(newValue) {
       if (newValue) {
-        let aux = await this.actListarSeguimientoServicio(newValue.id_Servicio)
-        this.body = aux.map(item => {
-          item.fecha_Seguimiento = formatDate(item.fecha_Seguimiento)
-          return item
-        })
+        let aux = await this.actListarSeguimientoServicio(newValue.id_Servicio);
+        this.body = aux.map((item) => {
+          item.fecha_Seguimiento = formatDate(item.fecha_Seguimiento);
+          return item;
+        });
       }
     },
   },
   methods: {
     ...mapActions("servicios", ["actListarSeguimientoServicio"]),
     callBackSearchServicio(data) {
-      if (typeof data === "object") {
+      if (typeof data === "object" && data.estado_Servicio === "En Proceso") {
         this.InfoServicio = data;
       } else {
         this.$notify({
-          message: "Servicio no encontrado",
+          message: "Servicio no se encuntra en proceso",
           icon: "ti-na",
           horizontalAlign: "right",
           verticalAlign: "bottom",
-          type: "error",
+          type: "danger",
         });
       }
     },

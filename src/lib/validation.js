@@ -5,20 +5,20 @@ export function evalObjetForm(objForm) {
       objForm[prop] === null ||
       objForm[prop] === undefined
     ) {
+
       return false;
-      break;
     }
     if (prop === 'email' || prop === 'correo') {
       if (!validarCorreo(objForm[prop])) {
-        console.log('email', prop);
+
         return false;
-        break;
+
       }
     } else {
       if (!validarCaracteres(objForm[prop])) {
-        console.log('caracter', prop);
+
         return false;
-        break;
+
       }
     }
   }
@@ -44,7 +44,7 @@ export function validarSoloNumeros(dato) {
 }
 
 // funcion URL
-export function evalURL(url){
-  let regx =/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/gm
+export function evalURL(url) {
+  let regx = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/gm
   return regx.test(url)
 }

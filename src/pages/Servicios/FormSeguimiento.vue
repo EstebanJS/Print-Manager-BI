@@ -10,6 +10,7 @@
               class="form-control border-input"
               placeholder="Descripción"
               v-model="seguimiento.Tipo_Seguimiento"
+              maxlength="255"
             >
             </textarea>
           </div>

@@ -41,7 +41,7 @@ export default {
   },
   data: () => ({
     InfoServicio: undefined,
-    headers: ["Actualizado por", "Correo", "Estado", "Seguimiento", "Fecha"],
+    headers: ["Asigando a", "Correo", "Estado", "Seguimiento", "Fecha"],
     body: [],
   }),
   watch: {

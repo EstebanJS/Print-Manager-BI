@@ -194,11 +194,11 @@ const routes = [
         name: "Perfil",
         component: Perfil,
       },
-      // {
-      //   path: "notifications",
-      //   name: "notifications",
-      //   component: Notifications
-      // },
+      {
+        path: "notifications",
+        name: "notifications",
+        component: Notifications
+      },
       {
         path: "icons",
         name: "icons",

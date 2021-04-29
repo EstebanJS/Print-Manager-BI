@@ -214,6 +214,7 @@ export default {
     },
   }),
   computed: {
+    ...mapGetters("users", ["getDataUser"]),
     ...mapGetters([
       "getEmpresaSelect",
       "getGeneroSelect",
@@ -242,6 +243,7 @@ export default {
       "actValidacionCorreoDocumento",
     ]),
     async EventButton() {
+      this.user.contrasena = sha256(this.user.numero_Doc);
       if (!evalObjetForm(this.user)) {
         this.$notify({
           message: "Campos vacios o concaracteres invalidos ($%&|<>/-)",
@@ -254,7 +256,6 @@ export default {
         switch (this.ActionForm) {
           case "ADD":
             if (await this.actValidacionCorreoDocumento(this.user)) {
-              this.user.contrasena = sha256(this.user.numero_Doc);
               if (await this.actCreateNewUser(this.user)) {
                 this.successMessage();
               } else {
@@ -327,6 +328,9 @@ export default {
       this.reptContrasena = this.user.contrasena;
     } else {
       this.user = { ...this.ClearUser };
+      if(this.getDataUser){
+        this.user.id_Ultimo_Usuarios_que_Modifico = this.getDataUser.id_Usuario
+      }
     }
     if (this.getEmpresaSelect.length === 0) {
       await this.actLoadEmpresaSelect();
