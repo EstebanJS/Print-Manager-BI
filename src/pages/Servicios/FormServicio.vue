@@ -242,7 +242,7 @@ export default {
       return "No se registra";
     },
   },
-  async created() {
+  async created() {+
     if (this.DataServiceProps) {
       this.servicio = { ...this.DataServiceProps };
     } else {

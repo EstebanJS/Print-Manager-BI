@@ -7,17 +7,6 @@
         <iframe
           height="720"
           style="width: 100%"
-          src="https://app.powerbi.com/view?r=eyJrIjoiYzVkY2Y4MWMtZWNjMi00YjQwLWFlOWEtMTcyMWVkOTIxYzU3IiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9"
-          frameborder="0"
-          allowFullScreen="true"
-        ></iframe>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <iframe
-          height="720"
-          style="width: 100%"
           src="https://app.powerbi.com/view?r=eyJrIjoiMTBlOWM3NTUtN2NmMi00NDgyLWIwMGMtZmM3ZjFhYzVhM2QxIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9"
           frameborder="0"
           allowFullScreen="true"
