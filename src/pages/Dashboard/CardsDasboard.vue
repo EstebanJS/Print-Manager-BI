@@ -122,7 +122,7 @@ export default {
   },
   created() {
     this.validCardDispositivos();
-    this.validCardServicios();
+    // this.validCardServicios();
     this.validCardRol();
   },
 };
