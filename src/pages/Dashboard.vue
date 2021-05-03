@@ -7,7 +7,7 @@
         <iframe
           height="720"
           style="width: 100%"
-          src="https://app.powerbi.com/view?r=eyJrIjoiMTBlOWM3NTUtN2NmMi00NDgyLWIwMGMtZmM3ZjFhYzVhM2QxIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9"
+          src="https://app.powerbi.com/view?r=eyJrIjoiMTBlOWM3NTUtN2NmMi00NDgyLWIwMGMtZmM3ZjFhYzVhM2QxIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9&pageName=ReportSection3b5962901aeb853510ab"
           frameborder="0"
           allowFullScreen="true"
         ></iframe>
