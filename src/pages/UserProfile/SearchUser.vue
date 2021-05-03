@@ -30,12 +30,20 @@ export default {
   methods: {
     ...mapActions("users", ["actSearchUser"]),
     async EventButton() {
-      if (validarCaracteres(this.NumDoc) && validarSoloNumeros(this.NumDoc)) {
+      if (validarCaracteres(this.NumDoc) && validarSoloNumeros(this.NumDoc) && this.NumDoc !== "") {
         const rest = await this.actSearchUser(this.NumDoc);
         if (Array.isArray(rest)) {
           if (rest.length > 0) {
             this.$emit("callback", rest[0]);
-          } 
+          } else {
+            this.$notify({
+              message: "Usuario no encontrado",
+              icon: "ti-na",
+              horizontalAlign: "right",
+              verticalAlign: "bottom",
+              type: "warning",
+            });
+          }
         }
       } else {
         this.$notify({
@@ -47,7 +55,7 @@ export default {
         });
       }
     },
-  }
+  },
 };
 </script>
 

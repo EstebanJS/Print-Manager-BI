@@ -34,7 +34,7 @@ export default {
           icon: "ti-na",
           horizontalAlign: "right",
           verticalAlign: "bottom",
-          type: "error",
+          type: "warning",
         });
       }
     },
