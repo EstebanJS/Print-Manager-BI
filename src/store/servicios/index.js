@@ -22,12 +22,24 @@ export default {
             }
             return undefined
         },
-        async actSearchService(_, id) {
+        async actSearchService({rootState}, id) {
             const { status, data } = await Api().get(`/servicios/${id}`)
             if (status === 200 && Array.isArray(data) && data.length > 0) {
-                return data[0]
+                return {status:200,data:data[0]}
             }
-            return undefined
+            let Query = {
+                "id_Empresa": rootState.users.sesion.UserData.id_Empresa,
+                "id_Rol": rootState.users.sesion.UserData.id_Rol,
+                "id_Usuario": rootState.users.sesion.UserData.id_Usuario,
+                "Columna_Filtro": "null",
+                "Valor_Filtro": "null"
+            }
+            const { status: sta, data: dta } = await Api().post('/listar_servicios',Query)
+            if (sta === 200) {
+                let target = dta.find(item => item.id_Servicio == id) 
+                if(target !== undefined && target.estado_Servicio === "Cerrado") return {status:204,data:undefined}
+            }
+            return {status:404,data:undefined}
         },
         async actCreateNewSeguimiento(_, data) {
             const { status: stsEstado } = await Api().get(`/cambiar_estado_servicio_en_proceso/${data.id_Servicio}`)

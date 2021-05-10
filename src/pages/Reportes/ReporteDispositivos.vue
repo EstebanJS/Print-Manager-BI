@@ -12,7 +12,9 @@
         </select>
       </div>
       <div class="col-md-6">
-        <label for="filtrarValor">Valor</label>
+        <label for="filtrarValor">{{
+          Columna_Filtro ? `${capitalize}:` : " Por :"
+        }}</label>
         <select
           class="custom-select"
           id="filtrarValor"
@@ -72,6 +74,13 @@ export default {
   computed: {
     ...mapGetters("dispositivos", ["getReporteDispostivos"]),
     ...mapGetters("users", ["getDataUser"]),
+    capitalize() {
+      if (typeof this.Columna_Filtro !== "string") return "";
+      return (
+        this.Columna_Filtro.charAt(0).toUpperCase() +
+        this.Columna_Filtro.slice(1)
+      );
+    },
   },
   watch: {
     Columna_Filtro(val) {

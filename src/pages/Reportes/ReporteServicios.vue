@@ -12,7 +12,9 @@
         </select>
       </div>
       <div class="col-md-6">
-        <label for="filtrarValor">Valor</label>
+        <label for="filtrarValor">{{
+          Columna_Filtro ? `${capitalize}:` : " Por :"
+        }}</label>
         <select
           class="custom-select"
           id="filtrarValor"
@@ -69,7 +71,7 @@ export default {
       "Tecnico",
       "Correo Tecnico",
       "Tip. Servicio",
-      "Estado"
+      "Estado",
     ],
     body: [],
     SelectValue: [],
@@ -77,6 +79,13 @@ export default {
   computed: {
     ...mapGetters("servicios", ["getReporteServicios"]),
     ...mapGetters("users", ["getDataUser"]),
+    capitalize() {
+      if (typeof this.Columna_Filtro !== "string") return "";
+      return (
+        this.Columna_Filtro.charAt(0).toUpperCase() +
+        this.Columna_Filtro.slice(1)
+      );
+    },
   },
   watch: {
     Columna_Filtro(val) {
@@ -106,7 +115,9 @@ export default {
           break;
         case "estado_Servicio":
           this.SelectValue = [
-            ...new Set(this.getReporteServicios.map((item) => item.estado_Servicio)),
+            ...new Set(
+              this.getReporteServicios.map((item) => item.estado_Servicio)
+            ),
           ];
 
           break;
@@ -117,7 +128,9 @@ export default {
           break;
         case "tipo_Servicio":
           this.SelectValue = [
-            ...new Set(this.getReporteServicios.map((item) => item.tipo_Servicio)),
+            ...new Set(
+              this.getReporteServicios.map((item) => item.tipo_Servicio)
+            ),
           ];
           break;
       }

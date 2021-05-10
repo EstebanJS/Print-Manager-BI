@@ -2,7 +2,7 @@
   <card class="card" title="Reporte usuarios">
     <div class="row">
       <div class="col-md-6">
-        <label for="filtrarPor">Filtrar por:</label>
+        <label for="filtrarPor">Filtrar:</label>
         <select class="custom-select" id="filtrarPor" v-model="Columna_Filtro">
           <option selected :value="null">Ninguno</option>
           <option value="rol">Rol</option>
@@ -12,7 +12,9 @@
         </select>
       </div>
       <div class="col-md-6">
-        <label for="filtrarValor">Valor</label>
+        <label for="filtrarValor">{{
+          Columna_Filtro ? `${capitalize}:` : " Por :"
+        }}</label>
         <select
           class="custom-select"
           id="filtrarValor"
@@ -71,6 +73,13 @@ export default {
   }),
   computed: {
     ...mapGetters("users", ["getDataUser", "getReporteUsuarios"]),
+    capitalize() {
+      if (typeof this.Columna_Filtro !== "string") return "";
+      return (
+        this.Columna_Filtro.charAt(0).toUpperCase() +
+        this.Columna_Filtro.slice(1)
+      );
+    },
   },
   watch: {
     Columna_Filtro(val) {
