@@ -244,6 +244,7 @@ export default {
     ]),
     async EventButton() {
       this.user.contrasena = sha256(this.user.numero_Doc);
+      this.reptContrasena = this.user.contrasena
       if (!evalObjetForm(this.user)) {
         this.$notify({
           message: "Campos vacios o concaracteres invalidos ($%&|<>/-)",
