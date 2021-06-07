@@ -22,7 +22,11 @@ export default {
         async actSearchEmpresa(context, nit) {
             const { status, data } = await Api().get(`/validar_empresa/${nit}`)
             if (status === 200 && Array.isArray(data) && data.length > 0) {
-                return data[0]
+                const {status:sts,data:dta} = await Api().get('/empresa')
+                if (sts === 200 && dta) {
+                    const response = dta.find(element => element.nit_Empresa ===nit)
+                    return response
+                }
             }
             return undefined
         },
